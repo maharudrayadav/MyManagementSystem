@@ -1,4 +1,4 @@
-/* Global Styles */
+/* ===== Global Styles ===== */
 body {
   margin: 0;
   padding: 0;
@@ -14,7 +14,7 @@ body {
   flex-direction: column;
 }
 
-/* Fancy Navbar */
+/* ===== Navbar Styling ===== */
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -26,7 +26,6 @@ body {
 
 .logo {
   color: #fff;
-  margin: 0;
   font-size: 1.8rem;
 }
 
@@ -59,38 +58,14 @@ body {
   background: #e60000;
 }
 
-/* Page Container */
+/* ===== Page Styling ===== */
 .page {
   flex: 1;
   padding: 30px;
   animation: fadeIn 0.5s ease;
 }
 
-/* Login Page Image */
-.login-image-container {
-  margin-bottom: 20px;
-}
-
-.login-img {
-  width: 100%;
-  max-width: 300px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-/* Home Page Image */
-.home-image-container {
-  margin-bottom: 20px;
-}
-
-.home-img {
-  width: 100%;
-  max-width: 600px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-/* Form Styles */
+/* ===== Forms & Input Fields ===== */
 .form-container {
   max-width: 400px;
   margin: 20px auto;
@@ -112,7 +87,7 @@ body {
   outline: none;
 }
 
-/* Button Styles */
+/* ===== Buttons ===== */
 .btn {
   padding: 12px;
   font-size: 1rem;
@@ -140,7 +115,7 @@ body {
   background: #1f65d8;
 }
 
-/* Styled Table */
+/* ===== Tables ===== */
 .styled-table {
   width: 90%;
   max-width: 800px;
@@ -165,12 +140,7 @@ body {
   background: #f9f9f9;
 }
 
-/* Search Result */
-.search-result {
-  margin-top: 20px;
-}
-
-/* Fade In Animation */
+/* ===== Animations ===== */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -180,54 +150,249 @@ body {
   }
 }
 
-/* PDF Container */
-.pdf-container {
+
+/* ===== Face Component Styling ===== */
+.face-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
   width: 100%;
+  max-width: 500px;
+  margin: 20px auto;
+}
+
+.video-stream {
+  width: 100%;
+  max-width: 400px;
+  border: 2px solid #6a11cb;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+.face-container input {
+  padding: 10px;
+  font-size: 1rem;
+  width: 80%;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.face-container button {
+  padding: 10px 15px;
+  font-size: 1rem;
+  margin: 5px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.face-container button:nth-child(2) { background: #2575fc; color: white; }
+.face-container button:nth-child(2):hover { background: #1f65d8; }
+
+.face-container button:nth-child(3) { background: #6a11cb; color: white; }
+.face-container button:nth-child(3):hover { background: #5a0db1; }
+
+.face-container button:nth-child(4) { background: #ff4d4d; color: white; }
+.face-container button:nth-child(4):hover { background: #e60000; }
+
+.face-container p {
+  margin-top: 10px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #333;
+}
+
+/* ===== Responsive Design (Mobile & Tablet) ===== */
+@media screen and (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    padding: 15px;
+    text-align: center;
+  }
+
+  .nav-right {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .nav-btn {
+    width: 100%;
+  }
+
+  .styled-table {
+    width: 100%;
+    overflow-x: auto;
+    display: block;
+  }
+
+  .face-container {
+    width: 90%;
+  }
+
+  .video-stream {
+    max-width: 100%;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .logo {
+    font-size: 1.5rem;
+  }
+
+  .face-container {
+    width: 100%;
+    padding: 15px;
+  }
+
+  .face-container input {
+    width: 100%;
+  }
+
+  .face-container button {
+    width: 100%;
+  }
+}
+
+/* ===== Result Show Table Styling ===== */
+.result-show {
+  width: 90%;
   max-width: 900px;
   margin: 30px auto;
-  background: #fff;
+  background: white;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
 }
 
-/* PDF Title */
-.pdf-title {
+.result-show h1 {
   font-size: 24px;
-  font-weight: bold;
-  color: #6a11cb; /* Matching Navbar */
-  margin-bottom: 10px;
-}
-
-/* PDF Subtitle */
-.pdf-subtitle {
-  font-size: 16px;
-  font-weight: normal;
-  color: #2575fc;
+  color: #6a11cb;
   margin-bottom: 20px;
 }
 
-/* PDF Table */
-.pdf-table {
+/* Table Styling */
+.result-table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
 }
 
-.pdf-table th {
+.result-table th {
   background: #6a11cb;
   color: white;
   padding: 10px;
   text-align: left;
 }
 
-.pdf-table td {
+.result-table td {
   padding: 10px;
   border: 1px solid #ddd;
 }
 
-.pdf-table tr:nth-child(even) {
+.result-table tr:nth-child(even) {
   background: #f9f9f9;
 }
+
+/* PDF Open Button */
+.pdf-button {
+  background: #2575fc;
+  color: white;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.pdf-button:hover {
+  background: #1f65d8;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+  .result-show {
+    width: 95%;
+    padding: 15px;
+  }
+
+  .result-table th,
+  .result-table td {
+    padding: 8px;
+  }
+
+  .pdf-button {
+    width: 100%;
+  }
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #6a11cb;
+  padding: 10px 20px;
+  color: white;
+}
+
+.nav-right button {
+  margin: 0 10px;
+  padding: 8px 12px;
+  border: none;
+  background: white;
+  color: #6a11cb;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.nav-right .logout {
+  background: red;
+  color: white;
+}
+
+.nav-right .google-login {
+  background: #4285F4;
+  color: white;
+}
+
+/* Login Form */
+.login-container {
+  width: 300px;
+  margin: auto;
+  text-align: center;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background: white;
+}
+
+.login-container input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.login-container button {
+  width: 100%;
+  padding: 10px;
+  background: #6a11cb;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.login-container button:hover {
+  background: #5a0db1;
+}
+
 

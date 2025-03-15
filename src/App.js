@@ -1,35 +1,48 @@
 import React, { useState, useEffect } from "react";
-import Home from "./components/Home";
-import Login from "./components/Login";
-import Registration from "./components/Registration";
-import AllVendors from "./components/AllVendors";
-import SearchVendor from "./components/SearchVendor";
-import ResultAddition from "./components/ResultAddition";
-import ResultShow from "./components/ResultShow";
-import FaceComponent from "./components/FaceComponent";
-import Navbar from "./components/Navbar";
+import Home from "./Home";
+import Login from "./Login";
+import Signup from "./Signup";
+import Registration from "./Registration";
+import AllVendors from "./AllVendors";
+import SearchVendor from "./SearchVendor";
+import ResultAddition from "./ResultAddition";
+import ResultShow from "./ResultShow";
+import FaceComponent from "./FaceComponent";
+import Navbar from "./Navbar";
+import "./App.css";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [currentPage, setCurrentPage] = useState("login");
+  const [currentPage, setCurrentPage] = useState("home"); // Default to Home
 
   useEffect(() => {
-    setIsAuthenticated(localStorage.getItem("isAuthenticated") === "true");
-    setCurrentPage(localStorage.getItem("isAuthenticated") ? "home" : "login");
+    const authStatus = localStorage.getItem("isAuthenticated") === "true";
+    setIsAuthenticated(authStatus);
   }, []);
 
   return (
     <div className="App">
-      {isAuthenticated && <Navbar setCurrentPage={setCurrentPage} />}
+      <Navbar
+        isAuthenticated={isAuthenticated}
+        setCurrentPage={setCurrentPage}
+        setIsAuthenticated={setIsAuthenticated}
+      />
       <div className="content">
-        {currentPage === "login" && <Login onLoginSuccess={() => setIsAuthenticated(true)} />}
         {currentPage === "home" && <Home />}
-        {currentPage === "registration" && <Registration />}
-        {currentPage === "allVendors" && <AllVendors />}
-        {currentPage === "search" && <SearchVendor />}
-        {currentPage === "ResultAddition" && <ResultAddition />}
-        {currentPage === "ResultShow" && <ResultShow />}
-        {currentPage === "FaceComponent" && <FaceComponent />}
+        {currentPage === "login" && <Login setIsAuthenticated={setIsAuthenticated} />}
+        {currentPage === "signup" && <Signup setCurrentPage={setCurrentPage} />}
+
+        {/* Show other pages only after login */}
+        {isAuthenticated && (
+          <>
+            {currentPage === "registration" && <Registration />}
+            {currentPage === "allVendors" && <AllVendors />}
+            {currentPage === "search" && <SearchVendor />}
+            {currentPage === "ResultAddition" && <ResultAddition />}
+            {currentPage === "ResultShow" && <ResultShow />}
+            {currentPage === "FaceComponent" && <FaceComponent />}
+          </>
+        )}
       </div>
     </div>
   );
