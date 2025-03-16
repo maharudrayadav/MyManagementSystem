@@ -27,9 +27,7 @@ const Login = ({ setIsAuthenticated, setCurrentPage }) => {
       if (response.ok) {
         localStorage.setItem("isAuthenticated", "true");
         setIsAuthenticated(true);
-
-        // After successful login, navigate to the home page or any page you prefer
-        setCurrentPage("home");  // This will close the login form and show the home page
+        setCurrentPage("home");  // Navigate to the home page after successful login
       } else {
         alert("Invalid login credentials");
       }
@@ -40,7 +38,7 @@ const Login = ({ setIsAuthenticated, setCurrentPage }) => {
   };
 
   const handleGoogleLogin = () => {
-    window.location.href = "YOUR_BACKEND_API/auth/google";  // Replace this with your actual backend API URL for Google login
+    window.location.href = "https://cloudvendor-1.onrender.com/auth/googleLoginSuccess";  // Redirect to your Google login success endpoint
   };
 
   return (
