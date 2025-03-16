@@ -16,12 +16,14 @@ const Login = ({ setIsAuthenticated }) => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          // Make sure the JSESSIONID cookie is sent correctly by the browser
+          // No need to explicitly set the Cookie header in the fetch request
         },
         body: JSON.stringify({
           username: loginData.email,  // Mapping email to username as per your API
           password: loginData.password,
         }),
-        credentials: "include",
+        credentials: "include",  // Ensures cookies are sent with the request
       });
 
       if (response.ok) {
