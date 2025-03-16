@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const Login = ({ setIsAuthenticated }) => {
+const Login = ({ setIsAuthenticated, setCurrentPage }) => {
   const [loginData, setLoginData] = useState({ email: "", password: "" });
 
   const handleChange = (e) => {
@@ -8,36 +8,39 @@ const Login = ({ setIsAuthenticated }) => {
     setLoginData({ ...loginData, [name]: value });
   };
 
- const handleSubmit = async (e) => {
-  e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  try {
-    const response = await fetch("https://cloudvendor-1.onrender.com/auth/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        username: loginData.email,  // Send email as username, if API expects username to be email
-        password: loginData.password,
-      }),
-      credentials: "include",  // Ensures cookies are sent with the request
-    });
+    try {
+      const response = await fetch("https://cloudvendor-1.onrender.com/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: loginData.email,  // Send email as username, if API expects username to be email
+          password: loginData.password,
+        }),
+        credentials: "include",  // Ensures cookies are sent with the request
+      });
 
-    if (response.ok) {
-      localStorage.setItem("isAuthenticated", "true");
-      setIsAuthenticated(true);
-    } else {
-      alert("Invalid login credentials");
+      if (response.ok) {
+        localStorage.setItem("isAuthenticated", "true");
+        setIsAuthenticated(true);
+
+        // After successful login, navigate to the home page or any page you prefer
+        setCurrentPage("home");  // This will close the login form and show the home page
+      } else {
+        alert("Invalid login credentials");
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      alert("Error connecting to server");
     }
-  } catch (error) {
-    console.error("Login error:", error);
-    alert("Error connecting to server");
-  }
-};
+  };
 
   const handleGoogleLogin = () => {
-    window.location.href = "YOUR_BACKEND_API/auth/google";  // Make sure to replace this with your actual backend API URL for Google login
+    window.location.href = "YOUR_BACKEND_API/auth/google";  // Replace this with your actual backend API URL for Google login
   };
 
   return (
