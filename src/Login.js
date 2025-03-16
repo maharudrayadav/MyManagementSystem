@@ -16,11 +16,10 @@ const Login = ({ setIsAuthenticated }) => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          // No need to manually add the JSESSIONID cookie, the browser will handle it
         },
         body: JSON.stringify({
-          username: loginData.email,  // Mapping email to username as per your API
-          password: loginData.password,
+          username: loginData.email,  // Use username, not email
+          password: loginData.password,  // Send password as per the API's expectation
         }),
         credentials: "include",  // Ensures cookies (like JSESSIONID) are sent with the request
       });
