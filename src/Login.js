@@ -16,14 +16,13 @@ const Login = ({ setIsAuthenticated }) => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          // Make sure the JSESSIONID cookie is sent correctly by the browser
-          // No need to explicitly set the Cookie header in the fetch request
+          // No need to manually add the JSESSIONID cookie, the browser will handle it
         },
         body: JSON.stringify({
           username: loginData.email,  // Mapping email to username as per your API
           password: loginData.password,
         }),
-        credentials: "include",  // Ensures cookies are sent with the request
+        credentials: "include",  // Ensures cookies (like JSESSIONID) are sent with the request
       });
 
       if (response.ok) {
@@ -39,7 +38,7 @@ const Login = ({ setIsAuthenticated }) => {
   };
 
   const handleGoogleLogin = () => {
-    window.location.href = "YOUR_BACKEND_API/auth/google";
+    window.location.href = "YOUR_BACKEND_API/auth/google";  // Make sure to replace this with your actual backend API URL for Google login
   };
 
   return (
