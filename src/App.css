@@ -395,4 +395,28 @@ body {
   background: #5a0db1;
 }
 
+.navbar {
+  background-color: #333;
+  padding: 10px;
+}
+
+.horizontal-menu {
+  list-style: none;
+  display: flex;
+  justify-content: space-around;
+  padding: 0;
+}
+
+.horizontal-menu li {
+  color: white;
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.horizontal-menu li:hover {
+  background-color: #555;
+}
+
+
 
