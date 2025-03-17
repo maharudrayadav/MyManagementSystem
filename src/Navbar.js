@@ -1,73 +1,30 @@
 import React from "react";
 
-const Navbar = ({ isAuthenticated, setCurrentPage, setIsAuthenticated }) => {
-  const handleSignoff = async () => {
-    try {
-      const response = await fetch("YOUR_BACKEND_API/logout", {
-        method: "POST",
-        credentials: "include",
-      });
-
-      if (response.ok) {
-        localStorage.removeItem("isAuthenticated");
-        setIsAuthenticated(false);
-        setCurrentPage("home"); // Redirect to Home after signoff
-      } else {
-        alert("Error during signoff.");
-      }
-    } catch (error) {
-      console.error("Signoff error:", error);
-      alert("Error during signoff.");
-    }
+const Navbar = ({ isAuthenticated, setCurrentPage, setIsAuthenticated, handleMenuClick }) => {
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    localStorage.setItem("isAuthenticated", "false");
+    setCurrentPage("home"); // Redirect to home after logout
   };
 
   return (
     <nav className="navbar">
-      <div className="nav-left">
-        <h2 className="logo">My App</h2>
-      </div>
-      <div className="nav-right">
-        <button className="nav-btn" onClick={() => setCurrentPage("home")}>
-          Home
-        </button>
-
-        {/* Show Login & Signup before login */}
-        {!isAuthenticated ? (
+      <ul className="horizontal-menu">
+        <li onClick={() => handleMenuClick("home")}>Home</li>
+        {!isAuthenticated && <li onClick={() => handleMenuClick("login")}>Login</li>}
+        {!isAuthenticated && <li onClick={() => handleMenuClick("signup")}>Signup</li>}
+        {isAuthenticated && (
           <>
-            <button className="nav-btn" onClick={() => setCurrentPage("login")}>
-              Login
-            </button>
-            <button className="nav-btn" onClick={() => setCurrentPage("signup")}>
-              Sign Up
-            </button>
-          </>
-        ) : (
-          <>
-            {/* Show these only after login */}
-            <button className="nav-btn" onClick={() => setCurrentPage("registration")}>
-              Registration
-            </button>
-            <button className="nav-btn" onClick={() => setCurrentPage("allVendors")}>
-              All Vendors
-            </button>
-            <button className="nav-btn" onClick={() => setCurrentPage("search")}>
-              Search Vendor
-            </button>
-            <button className="nav-btn" onClick={() => setCurrentPage("ResultAddition")}>
-              Result Addition
-            </button>
-            <button className="nav-btn" onClick={() => setCurrentPage("ResultShow")}>
-              Result Show
-            </button>
-            <button className="nav-btn" onClick={() => setCurrentPage("FaceComponent")}>
-              Face Component
-            </button>
-            <button className="nav-btn logout" onClick={handleSignoff}>
-              Sign Off
-            </button>
+            <li onClick={() => handleMenuClick("registration")}>Registration</li>
+            <li onClick={() => handleMenuClick("allVendors")}>All Vendors</li>
+            <li onClick={() => handleMenuClick("search")}>Search Vendor</li>
+            <li onClick={() => handleMenuClick("ResultAddition")}>Result Addition</li>
+            <li onClick={() => handleMenuClick("ResultShow")}>Result Show</li>
+            <li onClick={() => handleMenuClick("FaceComponent")}>Face Component</li>
+            <li onClick={handleLogout}>Logout</li>
           </>
         )}
-      </div>
+      </ul>
     </nav>
   );
 };
