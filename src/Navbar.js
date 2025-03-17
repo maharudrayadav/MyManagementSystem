@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./Navbar.css";
+import "./App.css";
 
 const Navbar = ({ isAuthenticated, setCurrentPage, setIsAuthenticated }) => {
   const [menuOpen, setMenuOpen] = useState(false);
