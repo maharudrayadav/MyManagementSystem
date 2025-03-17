@@ -20,19 +20,23 @@ const App = () => {
     setIsAuthenticated(authStatus);
   }, []);
 
+  const handleMenuClick = (page) => {
+    setCurrentPage(page);
+  };
+
   return (
     <div className="App">
       <Navbar
         isAuthenticated={isAuthenticated}
         setCurrentPage={setCurrentPage}
         setIsAuthenticated={setIsAuthenticated}
+        handleMenuClick={handleMenuClick} // Pass the function to handle menu clicks
       />
       <div className="content">
+        {/* Render pages based on current page and authentication status */}
         {currentPage === "home" && <Home />}
         {currentPage === "login" && <Login setIsAuthenticated={setIsAuthenticated} />}
         {currentPage === "signup" && <Signup setCurrentPage={setCurrentPage} />}
-
-        {/* Show other pages only after login */}
         {isAuthenticated && (
           <>
             {currentPage === "registration" && <Registration />}
