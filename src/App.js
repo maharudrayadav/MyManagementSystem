@@ -35,23 +35,17 @@ const App = () => {
     <div className="App">
       <Navbar
         isAuthenticated={isAuthenticated}
-        setCurrentPage={setCurrentPage}
-        setIsAuthenticated={setIsAuthenticated}
         handleMenuClick={handleMenuClick}
+        handleLogout={handleLogout}
       />
-      
       <div className="content">
-        {isAuthenticated && (
-          <div className="logout-container">
-            <button onClick={handleLogout} className="logout-btn">Logout</button>
-          </div>
-        )}
-        
+        {/* ✅ Conditional Rendering */}
         {currentPage === "home" && <Home />}
         {currentPage === "login" && <Login setIsAuthenticated={setIsAuthenticated} />}
         {currentPage === "signup" && <Signup setCurrentPage={setCurrentPage} />}
-        
-        {isAuthenticated && (
+
+        {/* ✅ Protected Pages (Only accessible if authenticated) */}
+        {isAuthenticated ? (
           <>
             {currentPage === "registration" && <Registration />}
             {currentPage === "allVendors" && <AllVendors />}
@@ -61,6 +55,10 @@ const App = () => {
             {currentPage === "FaceComponent" && <FaceComponent />}
             {currentPage === "pending" && <PendingStudents />}
           </>
+        ) : (
+          currentPage !== "home" && (
+            <p>Please log in to access this page.</p>
+          )
         )}
       </div>
     </div>
