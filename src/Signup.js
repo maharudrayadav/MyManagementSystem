@@ -1,11 +1,15 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 const Signup = ({ setCurrentPage }) => {
+  const [userType, setUserType] = useState("teacher"); // Default to teacher
   const [formData, setFormData] = useState({
     name: "",
     address: "",
     email: "",
     password: "",
+    className: "",
+    rollNo: "",
   });
 
   const handleChange = (e) => {
@@ -17,20 +21,31 @@ const Signup = ({ setCurrentPage }) => {
     e.preventDefault();
 
     try {
-      const response = await fetch("https://cloudvendor-1.onrender.com/auth/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: formData.name,
-          address: formData.address,
-          username: formData.email,  // Mapping email to username
-          password: formData.password,
-        }),
-      });
+      const url = userType === "teacher"
+        ? "https://cloudvendor-1.onrender.com/auth/register"  // Teacher API
+        : "http://localhost:8080/authStudent/register";        // Student API
 
-      if (response.ok) {
-        alert("Registration successful!");
-        setCurrentPage("home"); // Redirect to Home
+      const payload = userType === "teacher"
+        ? {
+            name: formData.name,
+            address: formData.address,
+            username: formData.email,
+            password: formData.password,
+          }
+        : {
+            username: formData.email,
+            password: formData.password,
+            name: formData.name,
+            address: formData.address,
+            className: formData.className,
+            rollNo: formData.rollNo,
+          };
+
+      const response = await axios.post(url, payload);
+
+      if (response.status === 200) {
+        alert(`${userType} registration successful!`);
+        setCurrentPage("home");
       } else {
         alert("Registration failed.");
       }
@@ -40,13 +55,22 @@ const Signup = ({ setCurrentPage }) => {
     }
   };
 
-  const handleGoogleSignup = () => {
-    window.location.href = "YOUR_BACKEND_API/auth/google";
-  };
-
   return (
     <div className="signup-container">
       <h1>Sign Up</h1>
+
+      {/* Dropdown for selecting Teacher or Student */}
+      <div>
+        <label>User Type:</label>
+        <select
+          value={userType}
+          onChange={(e) => setUserType(e.target.value)}
+        >
+          <option value="teacher">Teacher</option>
+          <option value="student">Student</option>
+        </select>
+      </div>
+
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -80,10 +104,31 @@ const Signup = ({ setCurrentPage }) => {
           onChange={handleChange}
           required
         />
+
+        {/* Show extra fields only for students */}
+        {userType === "student" && (
+          <>
+            <input
+              type="text"
+              name="className"
+              placeholder="Class Name"
+              value={formData.className}
+              onChange={handleChange}
+              required
+            />
+            <input
+              type="number"
+              name="rollNo"
+              placeholder="Roll No"
+              value={formData.rollNo}
+              onChange={handleChange}
+              required
+            />
+          </>
+        )}
+
         <button type="submit">Sign Up</button>
       </form>
-      <p>Or</p>
-      <button onClick={handleGoogleSignup}>Sign Up with Google</button>
     </div>
   );
 };
