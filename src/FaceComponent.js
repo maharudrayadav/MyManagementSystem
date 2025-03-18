@@ -37,7 +37,7 @@ const FaceComponent = () => {
         setIsCapturing(false);
     };
 
-    // Capture 10 images
+    // Capture and send 10 images
     const captureImages = async () => {
         if (!videoRef.current) return;
 
@@ -70,6 +70,7 @@ const FaceComponent = () => {
                     const response = await fetch("https://mypythonproject.onrender.com/capture_faces", {
                         method: "POST",
                         body: formData,
+                        mode: "cors"  // ✅ Ensure CORS handling
                     });
 
                     if (response.ok) {
@@ -88,7 +89,7 @@ const FaceComponent = () => {
         });
     };
 
-    // Train Model API
+    // Train Model API (Fixed)
     const trainModel = async () => {
         if (!userName.trim()) {
             setMessage("❌ Please enter your name.");
@@ -100,8 +101,11 @@ const FaceComponent = () => {
         try {
             const response = await fetch("https://mypythonproject.onrender.com/train_model", {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ user_name: userName }),   // ✅ Sending username
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ user_name: userName }),   // ✅ Send username properly
+                mode: "cors"  // ✅ Ensure CORS handling
             });
 
             const data = await response.json();
@@ -142,12 +146,13 @@ const FaceComponent = () => {
             canvas.toBlob(async (blob) => {
                 const formData = new FormData();
                 formData.append("image", blob, "recognition.jpg");
-                formData.append("username", userName);  // ✅ Sending username
+                formData.append("username", userName);  // ✅ Send username properly
 
                 try {
                     const response = await fetch("https://mypythonproject.onrender.com/recognize", {
                         method: "POST",
                         body: formData,
+                        mode: "cors"  // ✅ Ensure CORS handling
                     });
 
                     const data = await response.json();
@@ -190,31 +195,21 @@ const FaceComponent = () => {
                 onClick={() => {
                     startCamera().then(captureImages);
                 }}
-                className={`mt-4 px-4 py-2 text-white rounded ${isCapturing ? "bg-gray-500" : "bg-blue-500"}`}
+                className="mt-4 px-4 py-2 text-white bg-blue-500 rounded"
                 disabled={isCapturing}
             >
                 {isCapturing ? "Capturing..." : "Start & Capture"}
             </button>
 
-            <button
-                onClick={trainModel}
-                className="mt-2 px-4 py-2 text-white bg-green-500 rounded"
-            >
+            <button onClick={trainModel} className="mt-2 px-4 py-2 text-white bg-green-500 rounded">
                 Train Model
             </button>
 
-            <button
-                onClick={recognizeFace}
-                className="mt-2 px-4 py-2 text-white bg-purple-500 rounded"
-                disabled={isCapturing}
-            >
+            <button onClick={recognizeFace} className="mt-2 px-4 py-2 text-white bg-purple-500 rounded">
                 Recognize Face
             </button>
 
-            <button
-                onClick={stopCamera}
-                className="mt-2 px-4 py-2 text-white bg-red-500 rounded"
-            >
+            <button onClick={stopCamera} className="mt-2 px-4 py-2 text-white bg-red-500 rounded">
                 Stop Camera
             </button>
 
