@@ -90,35 +90,35 @@ const FaceComponent = () => {
     };
 
     // Train Model API (Fixed)
-    const trainModel = async () => {
-        if (!userName.trim()) {
-            setMessage("❌ Please enter your name.");
-            return;
-        }
+   const trainModel = async () => {
+    if (!userName.trim()) {
+        setMessage("❌ Please enter your name.");
+        return;
+    }
 
-        setMessage("⏳ Training model...");
+    setMessage("⏳ Training model...");
 
-        try {
-            const response = await fetch("https://mypythonproject.onrender.com/train_model", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ user_name: userName }),   // ✅ Send username properly
-                mode: "cors"  // ✅ Ensure CORS handling
-            });
+    try {
+        const response = await fetch("https://mypythonproject.onrender.com/train_model", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ user_name: userName })   // ✅ Correct payload
+        });
 
-            const data = await response.json();
-            if (response.ok) {
-                setMessage(`✅ Training Result: ${data.message || "Success"}`);
-            } else {
-                setMessage("❌ Error training model.");
-            }
-        } catch (error) {
-            console.error("Error training model:", error);
+        const data = await response.json();
+        
+        if (response.ok) {
+            setMessage(`✅ Training Result: ${data.message || "Success"}`);
+        } else {
             setMessage("❌ Error training model.");
         }
-    };
+    } catch (error) {
+        console.error("Error training model:", error);
+        setMessage("❌ Error training model.");
+    }
+};
 
     // Recognize Face API
     const recognizeFace = async () => {
