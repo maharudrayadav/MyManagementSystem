@@ -22,7 +22,7 @@ body {
   min-height: 100vh;
 }
 
-/* ===== Fancy Navbar ===== */
+/* ===== Navbar Styling ===== */
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -55,10 +55,10 @@ body {
 
 .nav-right {
   display: flex;
-  gap: 25px;
+  gap: 20px;   /* Add spacing between buttons */
 }
 
-/* ===== Fancy Buttons ===== */
+/* ===== Buttons Styling ===== */
 .nav-btn {
   background: transparent;
   color: #fff;
@@ -101,7 +101,7 @@ body {
   animation: fadeIn 0.8s ease;
 }
 
-/* ===== Glassy Form Styling ===== */
+/* ===== Form Styling ===== */
 .form-container {
   max-width: 500px;
   width: 100%;
@@ -200,17 +200,6 @@ body {
   to {
     opacity: 1;
     transform: translateY(0);
-  }
-}
-
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateX(-50px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
   }
 }
 
