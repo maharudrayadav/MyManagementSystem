@@ -23,7 +23,7 @@ const Signup = ({ setCurrentPage }) => {
     try {
       const url = userType === "teacher"
         ? "https://cloudvendor-1.onrender.com/auth/register"  // Teacher API
-        : "http://localhost:8080/authStudent/register";        // Student API
+        : "https://cloudvendor-1.onrender.com/authStudent/register";        // Student API
 
       const payload = userType === "teacher"
         ? {
