@@ -1,3 +1,26 @@
+/* ===== Global Styles ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background: #f0f2f5;
+  color: #333;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* ===== App Container ===== */
+.App {
+  text-align: center;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
 /* ===== Navbar Styling ===== */
 .navbar {
   display: flex;
@@ -83,23 +106,186 @@
 .nav-btn.warning:hover { background: #e0a800; }
 .nav-btn.logout:hover { background: #e60000; }
 
+/* ===== Forms & Input Fields ===== */
+.form-container {
+  max-width: 400px;
+  margin: 30px auto;
+  background: white;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+}
+
+.form-container:hover {
+  transform: translateY(-5px);
+}
+
+.input-field {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+
+.input-field:focus {
+  border-color: #6a11cb;
+  outline: none;
+}
+
+/* ===== Table Styling ===== */
+.styled-table {
+  width: 90%;
+  max-width: 1100px;
+  margin: 30px auto;
+  border-collapse: collapse;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+.styled-table th,
+.styled-table td {
+  padding: 15px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.styled-table th {
+  background: #6a11cb;
+  color: #fff;
+  font-size: 18px;
+}
+
+.styled-table tr:nth-child(even) {
+  background: #f9f9f9;
+}
+
+/* ===== Animations ===== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ===== Result Component Styling ===== */
+.result-container {
+  width: 90%;
+  max-width: 1100px;
+  margin: 30px auto;
+  background: white;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+}
+
+.result-container:hover {
+  transform: translateY(-5px);
+}
+
+.result-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.result-table th, 
+.result-table td {
+  padding: 15px;
+  border: 1px solid #ddd;
+}
+
+.result-table th {
+  background: #6a11cb;
+  color: white;
+}
+
+.result-table tr:nth-child(even) {
+  background: #f9f9f9;
+}
+
+/* ===== Face Component Styling ===== */
+.face-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 600px;
+  margin: 30px auto;
+  transition: 0.3s;
+}
+
+.face-container:hover {
+  transform: translateY(-5px);
+}
+
+.video-stream {
+  width: 100%;
+  max-width: 500px;
+  border: 3px solid #6a11cb;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+.face-container input {
+  padding: 12px;
+  font-size: 16px;
+  width: 80%;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.face-container button {
+  padding: 12px 20px;
+  font-size: 16px;
+  margin: 5px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.face-container button:nth-child(2) { background: #2575fc; color: white; }
+.face-container button:nth-child(2):hover { background: #1f65d8; }
+
+.face-container button:nth-child(3) { background: #6a11cb; color: white; }
+.face-container button:nth-child(3):hover { background: #5a0db1; }
+
+.face-container button:nth-child(4) { background: #ff4d4d; color: white; }
+.face-container button:nth-child(4):hover { background: #e60000; }
+
 /* ===== Responsive Design ===== */
 @media (max-width: 1024px) {
   .navbar {
     flex-direction: column;
-    align-items: center;
     padding: 20px;
   }
 
   .navbar-links {
     flex-direction: column;
     gap: 15px;
-    text-align: center;
   }
 
   .nav-btn {
     width: 100%;
     padding: 15px;
+  }
+
+  .styled-table, .result-table {
+    width: 100%;
+    overflow-x: auto;
+    display: block;
   }
 }
 
@@ -110,7 +296,6 @@
 
   .navbar-links {
     flex-direction: column;
-    gap: 10px;
   }
 
   .nav-btn {
