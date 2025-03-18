@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import "./App.css";  // ✅ Import the CSS file
 
 const PendingStudents = () => {
   const [students, setStudents] = useState([]);
@@ -25,8 +26,6 @@ const PendingStudents = () => {
     try {
       await axios.put(`https://cloudvendor-1.onrender.com/authStudent/approve/${username}`);
       alert(`Student ${username} approved!`);
-
-      // Refresh the list after approval
       setStudents(students.filter((student) => student.username !== username));
     } catch (error) {
       console.error("Error approving student:", error);
@@ -35,28 +34,31 @@ const PendingStudents = () => {
   };
 
   if (loading) {
-    return <p>Loading...</p>;
+    return <p className="loading">Loading...</p>;
   }
 
   return (
-    <div>
-      <h2>Pending Students</h2>
+    <div className="pending-container">
+      <h2 className="pending-title">Pending Students</h2>
       {students.length === 0 ? (
-        <p>No pending students</p>
+        <p className="no-students">No pending students</p>
       ) : (
-        <ul>
+        <div className="student-cards">
           {students.map((student) => (
-            <li key={student.username}>
-              <div>
-                <strong>{student.name}</strong> ({student.username})
-              </div>
-              <div>Class: {student.className}, Roll No: {student.rollNo}</div>
-              <button onClick={() => approveStudent(student.username)}>
+            <div key={student.username} className="student-card">
+              <h3>{student.name}</h3>
+              <p><strong>Username:</strong> {student.username}</p>
+              <p><strong>Class:</strong> {student.className}</p>
+              <p><strong>Roll No:</strong> {student.rollNo}</p>
+              <button
+                className="approve-btn"
+                onClick={() => approveStudent(student.username)}
+              >
                 Approve
               </button>
-            </li>
+            </div>
           ))}
-        </ul>
+        </div>
       )}
     </div>
   );
