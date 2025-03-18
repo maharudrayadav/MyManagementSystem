@@ -9,7 +9,7 @@ const PendingStudents = () => {
   useEffect(() => {
     const fetchPendingStudents = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/authStudent/pending");
+        const response = await axios.get("https://cloudvendor-1.onrender.com/authStudent/pending");
         setStudents(response.data);
         setLoading(false);
       } catch (error) {
@@ -23,7 +23,7 @@ const PendingStudents = () => {
   // Approve a student
   const approveStudent = async (username) => {
     try {
-      await axios.put(`http://localhost:8080/authStudent/approve/${username}`);
+      await axios.put(`https://cloudvendor-1.onrender.com/authStudent/approve/${username}`);
       alert(`Student ${username} approved!`);
 
       // Refresh the list after approval
