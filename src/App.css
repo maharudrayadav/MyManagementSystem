@@ -7,66 +7,77 @@
 }
 
 body {
-  background: #f4f4f4;
-  color: #333;
-  line-height: 1.6;
+  background: linear-gradient(135deg, #2c3e50, #4ca1af);
+  color: #fff;
   min-height: 100vh;
+  line-height: 1.6;
+  overflow-x: hidden;
+  animation: fadeIn 1s ease-in-out;
 }
 
+/* ===== App Layout ===== */
 .App {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
 
-/* ===== Navbar Styling ===== */
+/* ===== Fancy Navbar ===== */
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   background: linear-gradient(135deg, #6a11cb, #2575fc);
-  color: white;
-  padding: 20px 40px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  position: sticky;
-  top: 0;
+  color: #fff;
+  padding: 20px 50px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  transition: all 0.3s ease;
   z-index: 1000;
+}
+
+.navbar:hover {
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
+  transform: translateY(-5px);
 }
 
 .navbar .logo {
   font-size: 28px;
   font-weight: bold;
-  letter-spacing: 1px;
+  letter-spacing: 2px;
   transition: 0.3s;
   cursor: pointer;
 }
 
 .navbar .logo:hover {
   color: #f1c40f;
-  transform: scale(1.05);
+  transform: scale(1.1);
 }
 
 .nav-right {
   display: flex;
-  gap: 20px;
+  gap: 25px;
 }
 
+/* ===== Fancy Buttons ===== */
 .nav-btn {
-  background: #fff;
-  color: #2575fc;
-  border: 1px solid #2575fc;
-  padding: 10px 20px;
-  border-radius: 30px;
+  background: transparent;
+  color: #fff;
+  border: 2px solid #fff;
+  padding: 12px 30px;
+  border-radius: 50px;
   font-size: 16px;
-  font-weight: bold;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
 }
 
 .nav-btn:hover {
-  background: #2575fc;
-  color: white;
+  color: #2575fc;
+  background: #fff;
   transform: translateY(-3px);
+  box-shadow: 0 0 15px #fff, 0 0 40px #6a11cb;
 }
 
 .nav-btn.logout {
@@ -77,60 +88,43 @@ body {
 
 .nav-btn.logout:hover {
   background: #e60000;
+  box-shadow: 0 0 15px #ff4d4d, 0 0 40px #e60000;
 }
 
-/* ===== Content Styling ===== */
+/* ===== Main Content Styling ===== */
 .content {
   flex: 1;
-  padding: 40px 20px;
+  padding: 60px 20px;
   display: flex;
   justify-content: center;
   align-items: center;
+  animation: fadeIn 0.8s ease;
 }
 
-/* ===== Buttons Styling ===== */
-.btn {
-  display: inline-block;
-  padding: 12px 25px;
-  font-size: 16px;
-  color: white;
-  background: #6a11cb;
-  border: none;
-  border-radius: 30px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  text-align: center;
-  text-decoration: none;
-}
-
-.btn:hover {
-  background: #2575fc;
-  transform: translateY(-3px);
-}
-
-.btn.secondary {
-  background: #ff4d4d;
-}
-
-.btn.secondary:hover {
-  background: #e60000;
-}
-
-/* ===== Form Styling ===== */
+/* ===== Glassy Form Styling ===== */
 .form-container {
-  max-width: 450px;
+  max-width: 500px;
   width: 100%;
-  background: white;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
   padding: 40px;
-  border-radius: 10px;
-  animation: fadeIn 0.5s ease-in-out;
+  border-radius: 15px;
+  border: 2px solid transparent;
+  transition: all 0.4s ease;
+}
+
+.form-container:hover {
+  border: 2px solid #6a11cb;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.7);
+  transform: translateY(-10px);
 }
 
 .form-container h1 {
-  font-size: 28px;
-  color: #6a11cb;
-  margin-bottom: 20px;
+  font-size: 32px;
+  text-align: center;
+  color: #f1c40f;
+  margin-bottom: 30px;
 }
 
 .form-container input {
@@ -139,57 +133,61 @@ body {
   margin-bottom: 20px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  font-size: 16px;
-  transition: 0.3s;
+  font-size: 18px;
+  transition: all 0.3s;
 }
 
 .form-container input:focus {
   border-color: #6a11cb;
   outline: none;
+  box-shadow: 0 0 15px #6a11cb;
 }
 
 .form-container button {
   width: 100%;
   padding: 15px;
-  background: #2575fc;
+  font-size: 18px;
   color: white;
+  background: #6a11cb;
   border: none;
-  border-radius: 5px;
   cursor: pointer;
-  transition: 0.3s;
+  transition: all 0.4s;
+  border-radius: 8px;
 }
 
 .form-container button:hover {
-  background: #1f65d8;
+  background: #2575fc;
+  box-shadow: 0 0 20px #2575fc;
+  transform: scale(1.05);
 }
 
-/* ===== Table Styling ===== */
+/* ===== Fancy Table Styling ===== */
 .styled-table {
   width: 90%;
-  max-width: 1000px;
-  margin: 20px auto;
+  max-width: 1200px;
+  margin: 40px auto;
   border-collapse: collapse;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+  animation: fadeIn 1s ease-in-out;
 }
 
 .styled-table th, .styled-table td {
-  padding: 15px 20px;
-  border: 1px solid #ddd;
+  padding: 20px;
   text-align: left;
+  border-bottom: 1px solid #ccc;
+  color: #fff;
 }
 
 .styled-table th {
   background: #6a11cb;
-  color: white;
+  color: #fff;
   font-weight: bold;
-}
-
-.styled-table tr:nth-child(even) {
-  background: #f9f9f9;
+  transition: 0.3s;
 }
 
 .styled-table tr:hover {
-  background: #f1f1f1;
+  background: rgba(255, 255, 255, 0.1);
   transition: 0.3s;
 }
 
@@ -197,11 +195,22 @@ body {
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(-10px);
+    transform: translateY(-20px);
   }
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
   }
 }
 
@@ -215,15 +224,15 @@ body {
 
   .nav-right {
     flex-direction: column;
-    gap: 10px;
-  }
-
-  .content {
-    padding: 20px;
+    gap: 15px;
   }
 
   .form-container {
     width: 90%;
+  }
+
+  .styled-table {
+    width: 95%;
   }
 }
 
@@ -232,17 +241,16 @@ body {
     padding: 15px;
   }
 
-  .nav-right {
-    flex-direction: column;
-    align-items: center;
+  .nav-btn {
+    padding: 10px 20px;
   }
 
-  .nav-btn {
+  .form-container {
     width: 100%;
+    padding: 30px;
   }
 
   .styled-table {
-    width: 100%;
     font-size: 14px;
   }
 }
@@ -253,15 +261,20 @@ body {
   }
 
   .logo {
-    font-size: 20px;
+    font-size: 22px;
   }
 
   .nav-btn {
-    padding: 8px 12px;
+    padding: 8px 15px;
+    font-size: 14px;
   }
 
   .form-container {
     width: 100%;
-    padding: 20px;
+    padding: 25px;
+  }
+
+  .styled-table th, .styled-table td {
+    padding: 12px;
   }
 }
