@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Eye } from "lucide-react";
-import "./SearchVendor.css";  // Import CSS file
+import "./App.css";  // Import CSS file
 
 const SearchVendor = () => {
   const [searchId, setSearchId] = useState("");
