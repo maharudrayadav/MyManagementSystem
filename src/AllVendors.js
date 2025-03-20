@@ -3,13 +3,27 @@ import { Eye } from "lucide-react";
 
 const AllVendors = () => {
   const [vendors, setVendors] = useState([]);
+  const token = localStorage.getItem("token"); // Get token from storage
 
   useEffect(() => {
-    fetch("https://cloudvendor-1.onrender.com/cloudvendor")
-      .then((res) => res.json())
+    if (!token) {
+      console.error("No token found, please log in first.");
+      return;
+    }
+
+    fetch("https://cloudvendor-1.onrender.com/cloudvendor", {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("Unauthorized request");
+        return res.json();
+      })
       .then((data) => setVendors(data))
       .catch((error) => console.error("Error fetching vendors:", error));
-  }, []);
+  }, [token]);
 
   return (
     <div className="page all-vendors">
@@ -38,7 +52,9 @@ const AllVendors = () => {
                     onClick={() => {
                       const imageUrl = `data:image/png;base64,${vendor.vendorImage}`;
                       const newTab = window.open();
-                      newTab.document.write(`<img src="${imageUrl}" alt="Vendor Image" style="max-width:100%; height:auto;">`);
+                      newTab.document.write(
+                        `<img src="${imageUrl}" alt="Vendor Image" style="max-width:100%; height:auto;">`
+                      );
                     }}
                     style={{ cursor: "pointer" }}
                   />
