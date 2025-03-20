@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Eye } from "lucide-react";
+import "./SearchVendor.css";  // Import CSS file
 
 const SearchVendor = () => {
   const [searchId, setSearchId] = useState("");
@@ -15,7 +16,7 @@ const SearchVendor = () => {
       return;
     }
 
-    const token = localStorage.getItem("token"); // Get token from storage
+    const token = localStorage.getItem("token"); 
 
     if (!token) {
       setError("Authentication token is missing. Please log in.");
@@ -27,7 +28,7 @@ const SearchVendor = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`, // Attach JWT token
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ id: parseInt(searchId, 10) }),
       });
@@ -45,25 +46,27 @@ const SearchVendor = () => {
   };
 
   return (
-    <div className="page search">
+    <div className="search-container">
       <h1>Search Vendor</h1>
-      <form onSubmit={handleSearch}>
+      
+      <form onSubmit={handleSearch} className="search-form">
         <input
           type="text"
           placeholder="Enter Vendor ID"
           value={searchId}
           onChange={(e) => setSearchId(e.target.value)}
           required
+          className="search-input"
         />
-        <button type="submit">Search</button>
+        <button type="submit" className="search-button">Search</button>
       </form>
 
       {error && <p className="error-message">{error}</p>}
 
       {searchResult && (
-        <div className="search-result">
+        <div className="result-container">
           <h3>Search Result:</h3>
-          <table>
+          <table className="result-table">
             <thead>
               <tr>
                 <th>ID</th>
