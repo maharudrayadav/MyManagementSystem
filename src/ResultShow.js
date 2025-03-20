@@ -4,12 +4,34 @@ import autoTable from "jspdf-autotable";
 
 const ResultShow = () => {
     const [results, setResults] = useState([]);
+    const [error, setError] = useState("");
 
     useEffect(() => {
-        fetch("https://cloudvendor-1.onrender.com/cloudvendor/cloudsets")
-            .then((res) => res.json())
+        const token = localStorage.getItem("token"); // Get token from localStorage
+
+        if (!token) {
+            setError("Authentication token is missing. Please log in.");
+            return;
+        }
+
+        fetch("https://cloudvendor-1.onrender.com/cloudvendor/cloudsets", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,  // Include JWT token
+            },
+        })
+            .then((res) => {
+                if (!res.ok) {
+                    throw new Error("Failed to fetch results. Authentication required.");
+                }
+                return res.json();
+            })
             .then((data) => setResults(data))
-            .catch((error) => console.error("Error fetching results:", error));
+            .catch((error) => {
+                console.error("Error fetching results:", error);
+                setError(error.message || "An error occurred.");
+            });
     }, []);
 
     const generateStyledPDF = (result) => {
@@ -41,6 +63,9 @@ const ResultShow = () => {
     return (
         <div className="result-show">
             <h1>Result Show</h1>
+
+            {error && <p className="error-message">{error}</p>}
+
             <table className="result-table">
                 <thead>
                     <tr>
