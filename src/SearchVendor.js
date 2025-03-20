@@ -15,15 +15,25 @@ const SearchVendor = () => {
       return;
     }
 
+    const token = localStorage.getItem("token"); // Get token from storage
+
+    if (!token) {
+      setError("Authentication token is missing. Please log in.");
+      return;
+    }
+
     try {
       const response = await fetch("https://cloudvendor-1.onrender.com/cloudvendor/id", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`, // Attach JWT token
+        },
         body: JSON.stringify({ id: parseInt(searchId, 10) }),
       });
 
       if (!response.ok) {
-        throw new Error("Vendor not found");
+        throw new Error("Vendor not found or authentication failed");
       }
 
       const data = await response.json();
