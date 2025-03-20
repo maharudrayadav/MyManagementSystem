@@ -18,27 +18,27 @@ const Login = ({ setIsAuthenticated, setCurrentPage }) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          username: loginData.email,  // Send email as username, if API expects username to be email
+          username: loginData.email, // Ensure API expects email as username
           password: loginData.password,
         }),
-        credentials: "include",  // Ensures cookies are sent with the request
       });
 
-      if (response.ok) {
-        localStorage.setItem("isAuthenticated", "true");
-        setIsAuthenticated(true);
-        setCurrentPage("home");  // Navigate to the home page after successful login
-      } else {
-        alert("Invalid login credentials");
+      if (!response.ok) {
+        throw new Error("Invalid login credentials");
       }
+
+      const data = await response.json();
+      localStorage.setItem("token", data.token); // Save JWT token
+      setIsAuthenticated(true);
+      setCurrentPage("home"); // Redirect after login
     } catch (error) {
       console.error("Login error:", error);
-      alert("Error connecting to server");
+      alert("Error connecting to server or invalid credentials");
     }
   };
 
   const handleGoogleLogin = () => {
-    window.location.href = "https://cloudvendor-1.onrender.com/auth/googleLoginSuccess";  // Redirect to your Google login success endpoint
+    window.location.href = "https://cloudvendor-1.onrender.com/auth/googleLoginSuccess";
   };
 
   return (
