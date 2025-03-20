@@ -18,7 +18,7 @@ const Login = ({ setIsAuthenticated, setCurrentPage }) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          username: loginData.email, // Ensure API expects email as username
+          username: loginData.email, 
           password: loginData.password,
         }),
       });
@@ -27,18 +27,14 @@ const Login = ({ setIsAuthenticated, setCurrentPage }) => {
         throw new Error("Invalid login credentials");
       }
 
-      const data = await response.json();
-      localStorage.setItem("token", data.token); // Save JWT token
+      const token = await response.text();  // Read the token as plain text
+      localStorage.setItem("token", token.replace("Bearer ", ""));  // Store token without 'Bearer'
       setIsAuthenticated(true);
-      setCurrentPage("home"); // Redirect after login
+      setCurrentPage("home");  // Navigate to home page after successful login
     } catch (error) {
       console.error("Login error:", error);
       alert("Error connecting to server or invalid credentials");
     }
-  };
-
-  const handleGoogleLogin = () => {
-    window.location.href = "https://cloudvendor-1.onrender.com/auth/googleLoginSuccess";
   };
 
   return (
@@ -63,8 +59,6 @@ const Login = ({ setIsAuthenticated, setCurrentPage }) => {
         />
         <button type="submit">Login</button>
       </form>
-      <p>Or</p>
-      <button onClick={handleGoogleLogin}>Login with Google</button>
     </div>
   );
 };
