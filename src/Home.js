@@ -114,16 +114,41 @@ const Home = () => {
       {articles.length > 0 && (
         <div style={{ marginTop: "30px" }}>
           <h2>Latest Teacher-Related Articles</h2>
-          <ul>
+          <div style={{ display: "flex", gap: "20px", flexWrap: "wrap" }}>
             {articles.map((article, index) => (
-              <li key={index}>
-                <a href={article.url} target="_blank" rel="noopener noreferrer">
-                  {article.title}
-                </a>
-                <p>{article.description}</p>
-              </li>
+              <div
+                key={index}
+                style={{
+                  width: "300px",
+                  border: "1px solid #ccc",
+                  borderRadius: "10px",
+                  overflow: "hidden",
+                  boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
+                }}
+              >
+                <img
+                  src={article.urlToImage || "https://via.placeholder.com/300x150"}
+                  alt={article.title}
+                  style={{ width: "100%", height: "150px", objectFit: "cover" }}
+                />
+                <div style={{ padding: "10px" }}>
+                  <h3 style={{ fontSize: "18px" }}>
+                    <a
+                      href={article.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ textDecoration: "none", color: "#007BFF" }}
+                    >
+                      [{article.title}]
+                    </a>
+                  </h3>
+                  <p style={{ fontSize: "14px", color: "#555" }}>
+                    {article.description || "No description available."}
+                  </p>
+                </div>
+              </div>
             ))}
-          </ul>
+          </div>
         </div>
       )}
     </div>
