@@ -14,7 +14,7 @@ const Home = () => {
     Computer_Network: "https://via.placeholder.com/150?text=CN+Teacher",
   };
 
-  // Fetch random articles from a third-party API
+  // Fetch random articles from NewsAPI
   useEffect(() => {
     const fetchArticles = async () => {
       if (!selectedSubject) return;
@@ -27,7 +27,9 @@ const Home = () => {
         if (!response.ok) throw new Error("Failed to fetch articles.");
 
         const data = await response.json();
-        const randomArticles = data.articles.slice(0, 3); // Get 3 random articles
+        
+        // Slice to get 3 random articles
+        const randomArticles = data.articles.slice(0, 3);
         setArticles(randomArticles);
       } catch (error) {
         console.error("Error fetching articles:", error);
@@ -111,7 +113,7 @@ const Home = () => {
         Start / Join Class
       </button>
 
-      {articles.length > 0 && (
+      {articles.length > 0 ? (
         <div style={{ marginTop: "30px" }}>
           <h2>Latest Teacher-Related Articles</h2>
           <div style={{ display: "flex", gap: "20px", flexWrap: "wrap" }}>
@@ -150,6 +152,8 @@ const Home = () => {
             ))}
           </div>
         </div>
+      ) : (
+        <p style={{ marginTop: "20px" }}>No articles found for this subject.</p>
       )}
     </div>
   );
