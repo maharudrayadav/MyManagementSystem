@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { FaEye, FaEyeSlash } from "react-icons/fa";  // Import eye icons
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";  // Use smaller eye icons
 
 const Login = ({ setIsAuthenticated, setCurrentPage }) => {
   const [loginData, setLoginData] = useState({ email: "", password: "" });
   const [userType, setUserType] = useState("teacher");
-  const [showPassword, setShowPassword] = useState(false);  // Toggle password visibility
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -76,13 +76,13 @@ const Login = ({ setIsAuthenticated, setCurrentPage }) => {
 
         <div style={{ position: "relative" }}>
           <input
-            type={showPassword ? "text" : "password"}  // Toggle input type
+            type={showPassword ? "text" : "password"}
             name="password"
             placeholder="Password"
             value={loginData.password}
             onChange={handleChange}
             required
-            style={{ paddingRight: "40px" }}
+            style={{ paddingRight: "35px" }}
           />
           <span
             onClick={togglePasswordVisibility}
@@ -92,9 +92,11 @@ const Login = ({ setIsAuthenticated, setCurrentPage }) => {
               top: "50%",
               transform: "translateY(-50%)",
               cursor: "pointer",
+              fontSize: "14px",  // Smaller icon size
+              color: "#555"       // Subtle color
             }}
           >
-            {showPassword ? <FaEyeSlash /> : <FaEye />}
+            {showPassword ? <FaRegEyeSlash /> : <FaRegEye />}
           </span>
         </div>
 
