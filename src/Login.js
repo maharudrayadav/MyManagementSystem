@@ -1,8 +1,10 @@
 import React, { useState } from "react";
+import { FaEye, FaEyeSlash } from "react-icons/fa";  // Import eye icons
 
 const Login = ({ setIsAuthenticated, setCurrentPage }) => {
   const [loginData, setLoginData] = useState({ email: "", password: "" });
-  const [userType, setUserType] = useState("teacher"); // Default to teacher
+  const [userType, setUserType] = useState("teacher");
+  const [showPassword, setShowPassword] = useState(false);  // Toggle password visibility
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -11,6 +13,10 @@ const Login = ({ setIsAuthenticated, setCurrentPage }) => {
 
   const handleUserTypeChange = (e) => {
     setUserType(e.target.value);
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword((prevState) => !prevState);
   };
 
   const handleSubmit = async (e) => {
@@ -38,12 +44,10 @@ const Login = ({ setIsAuthenticated, setCurrentPage }) => {
       }
 
       if (userType === "teacher") {
-        // Teacher API returns token
         const token = await response.text();
         localStorage.setItem("token", token.replace("Bearer ", ""));
       }
 
-      // Student API doesn't return anything but still indicates success
       setIsAuthenticated(true);
       setCurrentPage("home");
     } catch (error) {
@@ -60,6 +64,7 @@ const Login = ({ setIsAuthenticated, setCurrentPage }) => {
           <option value="teacher">Teacher</option>
           <option value="student">Student</option>
         </select>
+
         <input
           type="email"
           name="email"
@@ -68,14 +73,31 @@ const Login = ({ setIsAuthenticated, setCurrentPage }) => {
           onChange={handleChange}
           required
         />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={loginData.password}
-          onChange={handleChange}
-          required
-        />
+
+        <div style={{ position: "relative" }}>
+          <input
+            type={showPassword ? "text" : "password"}  // Toggle input type
+            name="password"
+            placeholder="Password"
+            value={loginData.password}
+            onChange={handleChange}
+            required
+            style={{ paddingRight: "40px" }}
+          />
+          <span
+            onClick={togglePasswordVisibility}
+            style={{
+              position: "absolute",
+              right: "10px",
+              top: "50%",
+              transform: "translateY(-50%)",
+              cursor: "pointer",
+            }}
+          >
+            {showPassword ? <FaEyeSlash /> : <FaEye />}
+          </span>
+        </div>
+
         <button type="submit">Login</button>
       </form>
     </div>
