@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 const Home = () => {
   const [selectedSubject, setSelectedSubject] = useState("");
-  const [randomArticles, setRandomArticles] = useState([]);
+  const [articles, setArticles] = useState([]);
   const subjects = ["DSA", "Competitive_Programming", "Math", "Computer_Network"];
   const token = localStorage.getItem("token"); // Retrieve the token
 
@@ -14,37 +14,27 @@ const Home = () => {
     Computer_Network: "https://via.placeholder.com/150?text=CN+Teacher",
   };
 
-  // Articles for subjects
-  const articles = {
-    DSA: [
-      { title: "Understanding Data Structures", url: "https://example.com/dsa1" },
-      { title: "Optimizing Algorithms", url: "https://example.com/dsa2" },
-      { title: "Time Complexity Analysis", url: "https://example.com/dsa3" },
-    ],
-    Competitive_Programming: [
-      { title: "CP Tricks and Tips", url: "https://example.com/cp1" },
-      { title: "Top 10 CP Challenges", url: "https://example.com/cp2" },
-      { title: "Efficient Problem Solving", url: "https://example.com/cp3" },
-    ],
-    Math: [
-      { title: "Advanced Calculus", url: "https://example.com/math1" },
-      { title: "Linear Algebra Basics", url: "https://example.com/math2" },
-      { title: "Probability and Statistics", url: "https://example.com/math3" },
-    ],
-    Computer_Network: [
-      { title: "Network Protocols Explained", url: "https://example.com/cn1" },
-      { title: "Understanding TCP/IP", url: "https://example.com/cn2" },
-      { title: "Routing and Switching", url: "https://example.com/cn3" },
-    ],
-  };
-
-  // Randomly select 2 articles when the subject changes
+  // Fetch random articles from a third-party API
   useEffect(() => {
-    if (selectedSubject) {
-      const subjectArticles = articles[selectedSubject] || [];
-      const shuffled = subjectArticles.sort(() => 0.5 - Math.random());
-      setRandomArticles(shuffled.slice(0, 2));
-    }
+    const fetchArticles = async () => {
+      if (!selectedSubject) return;
+
+      try {
+        const response = await fetch(
+          `https://newsapi.org/v2/everything?q=${selectedSubject}&apiKey=YOUR_NEWS_API_KEY`
+        );
+
+        if (!response.ok) throw new Error("Failed to fetch articles.");
+
+        const data = await response.json();
+        const randomArticles = data.articles.slice(0, 3); // Get 3 random articles
+        setArticles(randomArticles);
+      } catch (error) {
+        console.error("Error fetching articles:", error);
+      }
+    };
+
+    fetchArticles();
   }, [selectedSubject]);
 
   const startMeeting = async () => {
@@ -121,15 +111,16 @@ const Home = () => {
         Start / Join Class
       </button>
 
-      {randomArticles.length > 0 && (
+      {articles.length > 0 && (
         <div style={{ marginTop: "30px" }}>
-          <h2>Random Teacher-Related Articles</h2>
+          <h2>Latest Teacher-Related Articles</h2>
           <ul>
-            {randomArticles.map((article, index) => (
+            {articles.map((article, index) => (
               <li key={index}>
                 <a href={article.url} target="_blank" rel="noopener noreferrer">
                   {article.title}
                 </a>
+                <p>{article.description}</p>
               </li>
             ))}
           </ul>
