@@ -1,76 +1,16 @@
 import React, { useState } from "react";
 
 const Home = () => {
-  const [articles] = useState([
-    {
-      subject: "DSA",
-      title: "Introduction to Data Structures",
-      description: "Learn the basics of data structures, including arrays, linked lists, and trees.",
-      image: "https://via.placeholder.com/300x150?text=DSA+Article",
-      url: "https://example.com/dsa-article",
-    },
-    {
-      subject: "DSA",
-      title: "Algorithm Optimization Tips",
-      description: "Enhance your coding skills with advanced optimization techniques.",
-      image: "https://via.placeholder.com/300x150?text=DSA+Optimization",
-      url: "https://example.com/dsa-optimization",
-    },
-    {
-      subject: "Competitive_Programming",
-      title: "Top 10 Competitive Programming Strategies",
-      description: "Boost your skills with expert tips for coding contests.",
-      image: "https://via.placeholder.com/300x150?text=CP+Strategies",
-      url: "https://example.com/cp-strategies",
-    },
-    {
-      subject: "Competitive_Programming",
-      title: "Dynamic Programming Explained",
-      description: "Master dynamic programming with easy-to-understand examples.",
-      image: "https://via.placeholder.com/300x150?text=CP+DP",
-      url: "https://example.com/cp-dp",
-    },
-    {
-      subject: "Math",
-      title: "Mathematical Theorems for Beginners",
-      description: "Learn fundamental theorems with simple explanations.",
-      image: "https://via.placeholder.com/300x150?text=Math+Theorems",
-      url: "https://example.com/math-theorems",
-    },
-    {
-      subject: "Math",
-      title: "Calculus Basics",
-      description: "Understand the core concepts of calculus with real-world examples.",
-      image: "https://via.placeholder.com/300x150?text=Calculus",
-      url: "https://example.com/calculus-basics",
-    },
-    {
-      subject: "Computer_Network",
-      title: "Network Security Tips",
-      description: "Improve your knowledge of network security best practices.",
-      image: "https://via.placeholder.com/300x150?text=Network+Security",
-      url: "https://example.com/network-security",
-    },
-    {
-      subject: "Computer_Network",
-      title: "OSI Model Explained",
-      description: "Learn about the seven layers of the OSI model.",
-      image: "https://via.placeholder.com/300x150?text=OSI+Model",
-      url: "https://example.com/osi-model",
-    },
-  ]);
-
+  const [selectedSubject, setSelectedSubject] = useState("");
   const subjects = ["DSA", "Competitive_Programming", "Math", "Computer_Network"];
-  const token = localStorage.getItem("token"); // Retrieve the token
+  const token = localStorage.getItem("token");
 
-  const subjectImages = {
-    DSA: "https://via.placeholder.com/150?text=DSA+Teacher",
-    Competitive_Programming: "https://via.placeholder.com/150?text=CP+Teacher",
-    Math: "https://via.placeholder.com/150?text=Math+Teacher",
-    Computer_Network: "https://via.placeholder.com/150?text=CN+Teacher",
-  };
+  const startMeeting = async () => {
+    if (!selectedSubject) {
+      alert("Please select a subject.");
+      return;
+    }
 
-  const startMeeting = async (subject) => {
     if (!token) {
       alert("No token found. Please log in.");
       return;
@@ -78,7 +18,7 @@ const Home = () => {
 
     try {
       const response = await fetch(
-        `https://cloudvendor-1.onrender.com/cloudvendor/create/${subject}`,
+        `https://cloudvendor-1.onrender.com/cloudvendor/create/${selectedSubject}`,
         {
           method: "GET",
           headers: {
@@ -98,74 +38,108 @@ const Home = () => {
   };
 
   return (
-    <div className="page home" style={{ padding: "20px", fontFamily: "Arial, sans-serif" }}>
-      <h1>Welcome to Teacher Management</h1>
+    <div style={styles.container}>
+      <header style={styles.header}>
+        <h1>Welcome to Your Virtual Classroom</h1>
+      </header>
 
-      {subjects.map((subject) => (
-        <div key={subject} style={{ marginBottom: "40px" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
-            <h2>{subject.replace("_", " ")}</h2>
-            <img
-              src={subjectImages[subject]}
-              alt={subject}
-              style={{ width: "150px", height: "150px", borderRadius: "10px" }}
-            />
-            <button
-              onClick={() => startMeeting(subject)}
-              style={{
-                padding: "10px 20px",
-                fontSize: "16px",
-                backgroundColor: "#4CAF50",
-                color: "white",
-                border: "none",
-                cursor: "pointer",
-              }}
-            >
-              Start / Join {subject.replace("_", " ")} Class
-            </button>
-          </div>
+      <div style={styles.content}>
+        <select
+          value={selectedSubject}
+          onChange={(e) => setSelectedSubject(e.target.value)}
+          style={styles.select}
+        >
+          <option value="">Select a Subject</option>
+          {subjects.map((subject) => (
+            <option key={subject} value={subject}>
+              {subject.replace("_", " ")}
+            </option>
+          ))}
+        </select>
 
-          <div style={{ display: "flex", gap: "20px", flexWrap: "wrap", marginTop: "20px" }}>
-            {articles
-              .filter((article) => article.subject === subject)
-              .map((article, index) => (
-                <div
-                  key={index}
-                  style={{
-                    width: "300px",
-                    border: "1px solid #ccc",
-                    borderRadius: "10px",
-                    overflow: "hidden",
-                    boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
-                  }}
-                >
-                  <img
-                    src={article.image}
-                    alt={article.title}
-                    style={{ width: "100%", height: "150px", objectFit: "cover" }}
-                  />
-                  <div style={{ padding: "10px" }}>
-                    <h3 style={{ fontSize: "18px" }}>
-                      <a
-                        href={article.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{ textDecoration: "none", color: "#007BFF" }}
-                      >
-                        [{article.title}]
-                      </a>
-                    </h3>
-                    <p style={{ fontSize: "14px", color: "#555" }}>
-                      {article.description}
-                    </p>
-                  </div>
-                </div>
-              ))}
-          </div>
+        <button onClick={startMeeting} style={styles.button}>
+          🚀 Start / Join Class
+        </button>
+
+        {/* Teacher Article Section */}
+        <div style={styles.article}>
+          <h2 style={styles.articleTitle}>📚 The Impact of Teachers in Education</h2>
+          <p>
+            Teachers play a vital role in shaping young minds by nurturing creativity, 
+            fostering critical thinking, and instilling values. They inspire students 
+            to achieve their goals and become lifelong learners.
+          </p>
+          <p>
+            In the digital era, teachers embrace technology to make learning 
+            interactive and accessible, bridging the gap between knowledge and students.
+          </p>
+          <p>
+            A passionate teacher leaves a lasting impact, empowering students 
+            to explore, innovate, and succeed.
+          </p>
         </div>
-      ))}
+      </div>
     </div>
   );
+};
+
+const styles = {
+  container: {
+    fontFamily: "Arial, sans-serif",
+    minHeight: "100vh",
+    background: "linear-gradient(to right, #6a11cb, #2575fc)",
+    color: "#fff",
+    padding: "40px",
+  },
+  header: {
+    textAlign: "center",
+    marginBottom: "30px",
+  },
+  content: {
+    maxWidth: "800px",
+    margin: "0 auto",
+    background: "#fff",
+    color: "#333",
+    padding: "30px",
+    borderRadius: "12px",
+    boxShadow: "0 8px 16px rgba(0, 0, 0, 0.2)",
+  },
+  select: {
+    width: "100%",
+    padding: "12px",
+    fontSize: "16px",
+    marginBottom: "20px",
+    borderRadius: "8px",
+    border: "1px solid #ccc",
+    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+  },
+  button: {
+    width: "100%",
+    padding: "14px",
+    fontSize: "18px",
+    backgroundColor: "#6a11cb",
+    color: "#fff",
+    border: "none",
+    borderRadius: "8px",
+    cursor: "pointer",
+    transition: "background 0.3s",
+  },
+  buttonHover: {
+    backgroundColor: "#2575fc",
+  },
+  article: {
+    marginTop: "40px",
+    padding: "25px",
+    background: "#f1f1f1",
+    borderRadius: "12px",
+    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+    color: "#333",
+  },
+  articleTitle: {
+    fontSize: "24px",
+    marginBottom: "15px",
+    color: "#6a11cb",
+  },
 };
 
 export default Home;
