@@ -1,45 +1,74 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 const Home = () => {
-  const [articles, setArticles] = useState([]);
+  const [articles] = useState([
+    {
+      subject: "DSA",
+      title: "Introduction to Data Structures",
+      description: "Learn the basics of data structures, including arrays, linked lists, and trees.",
+      image: "https://via.placeholder.com/300x150?text=DSA+Article",
+      url: "https://example.com/dsa-article",
+    },
+    {
+      subject: "DSA",
+      title: "Algorithm Optimization Tips",
+      description: "Enhance your coding skills with advanced optimization techniques.",
+      image: "https://via.placeholder.com/300x150?text=DSA+Optimization",
+      url: "https://example.com/dsa-optimization",
+    },
+    {
+      subject: "Competitive_Programming",
+      title: "Top 10 Competitive Programming Strategies",
+      description: "Boost your skills with expert tips for coding contests.",
+      image: "https://via.placeholder.com/300x150?text=CP+Strategies",
+      url: "https://example.com/cp-strategies",
+    },
+    {
+      subject: "Competitive_Programming",
+      title: "Dynamic Programming Explained",
+      description: "Master dynamic programming with easy-to-understand examples.",
+      image: "https://via.placeholder.com/300x150?text=CP+DP",
+      url: "https://example.com/cp-dp",
+    },
+    {
+      subject: "Math",
+      title: "Mathematical Theorems for Beginners",
+      description: "Learn fundamental theorems with simple explanations.",
+      image: "https://via.placeholder.com/300x150?text=Math+Theorems",
+      url: "https://example.com/math-theorems",
+    },
+    {
+      subject: "Math",
+      title: "Calculus Basics",
+      description: "Understand the core concepts of calculus with real-world examples.",
+      image: "https://via.placeholder.com/300x150?text=Calculus",
+      url: "https://example.com/calculus-basics",
+    },
+    {
+      subject: "Computer_Network",
+      title: "Network Security Tips",
+      description: "Improve your knowledge of network security best practices.",
+      image: "https://via.placeholder.com/300x150?text=Network+Security",
+      url: "https://example.com/network-security",
+    },
+    {
+      subject: "Computer_Network",
+      title: "OSI Model Explained",
+      description: "Learn about the seven layers of the OSI model.",
+      image: "https://via.placeholder.com/300x150?text=OSI+Model",
+      url: "https://example.com/osi-model",
+    },
+  ]);
+
   const subjects = ["DSA", "Competitive_Programming", "Math", "Computer_Network"];
   const token = localStorage.getItem("token"); // Retrieve the token
 
-  // Images for subjects
   const subjectImages = {
     DSA: "https://via.placeholder.com/150?text=DSA+Teacher",
     Competitive_Programming: "https://via.placeholder.com/150?text=CP+Teacher",
     Math: "https://via.placeholder.com/150?text=Math+Teacher",
     Computer_Network: "https://via.placeholder.com/150?text=CN+Teacher",
   };
-
-  // Fetch articles for all subjects
-  useEffect(() => {
-    const fetchAllArticles = async () => {
-      const allArticles = {};
-
-      for (const subject of subjects) {
-        try {
-          const response = await fetch(
-            `https://newsapi.org/v2/everything?q=${subject}&apiKey=YOUR_NEWS_API_KEY`
-          );
-
-          if (!response.ok) throw new Error(`Failed to fetch articles for ${subject}`);
-
-          const data = await response.json();
-          allArticles[subject] = data.articles.slice(0, 3); // Display 3 articles per subject
-
-        } catch (error) {
-          console.error(`Error fetching articles for ${subject}:`, error);
-          allArticles[subject] = [];
-        }
-      }
-
-      setArticles(allArticles);
-    };
-
-    fetchAllArticles();
-  }, []);
 
   const startMeeting = async (subject) => {
     if (!token) {
@@ -97,8 +126,9 @@ const Home = () => {
           </div>
 
           <div style={{ display: "flex", gap: "20px", flexWrap: "wrap", marginTop: "20px" }}>
-            {articles[subject] && articles[subject].length > 0 ? (
-              articles[subject].map((article, index) => (
+            {articles
+              .filter((article) => article.subject === subject)
+              .map((article, index) => (
                 <div
                   key={index}
                   style={{
@@ -110,7 +140,7 @@ const Home = () => {
                   }}
                 >
                   <img
-                    src={article.urlToImage || "https://via.placeholder.com/300x150"}
+                    src={article.image}
                     alt={article.title}
                     style={{ width: "100%", height: "150px", objectFit: "cover" }}
                   />
@@ -126,14 +156,11 @@ const Home = () => {
                       </a>
                     </h3>
                     <p style={{ fontSize: "14px", color: "#555" }}>
-                      {article.description || "No description available."}
+                      {article.description}
                     </p>
                   </div>
                 </div>
-              ))
-            ) : (
-              <p>No articles found for {subject.replace("_", " ")}.</p>
-            )}
+              ))}
           </div>
         </div>
       ))}
