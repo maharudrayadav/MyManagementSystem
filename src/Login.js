@@ -57,10 +57,10 @@ const Login = ({ setIsAuthenticated, setCurrentPage }) => {
   };
 
   return (
-    <div className="login-container">
+    <div className="login-container" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
       <h1>Login</h1>
-      <form onSubmit={handleSubmit}>
-        <select value={userType} onChange={handleUserTypeChange}>
+      <form onSubmit={handleSubmit} style={{ width: "300px" }}>
+        <select value={userType} onChange={handleUserTypeChange} style={{ width: "100%", padding: "8px", marginBottom: "10px" }}>
           <option value="teacher">Teacher</option>
           <option value="student">Student</option>
         </select>
@@ -72,9 +72,10 @@ const Login = ({ setIsAuthenticated, setCurrentPage }) => {
           value={loginData.email}
           onChange={handleChange}
           required
+          style={{ width: "100%", padding: "8px", marginBottom: "10px" }}
         />
 
-        {/* Password Input with Eye Icon */}
+        {/* Smaller Password Box */}
         <div style={{ position: "relative", width: "100%" }}>
           <input
             type={showPassword ? "text" : "password"}
@@ -83,7 +84,13 @@ const Login = ({ setIsAuthenticated, setCurrentPage }) => {
             value={loginData.password}
             onChange={handleChange}
             required
-            style={{ width: "100%", paddingRight: "40px" }}
+            style={{
+              width: "100%",
+              padding: "6px 35px 6px 10px",  // Smaller padding for a compact look
+              border: "1px solid #ccc",
+              borderRadius: "5px",
+              fontSize: "14px"
+            }}
           />
           <span
             onClick={togglePasswordVisibility}
@@ -100,7 +107,7 @@ const Login = ({ setIsAuthenticated, setCurrentPage }) => {
           </span>
         </div>
 
-        <button type="submit">Login</button>
+        <button type="submit" style={{ width: "100%", padding: "8px", marginTop: "10px" }}>Login</button>
       </form>
     </div>
   );
