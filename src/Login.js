@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";  // Use smaller eye icons
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";  
 
 const Login = ({ setIsAuthenticated, setCurrentPage }) => {
   const [loginData, setLoginData] = useState({ email: "", password: "" });
   const [userType, setUserType] = useState("teacher");
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -74,7 +74,8 @@ const Login = ({ setIsAuthenticated, setCurrentPage }) => {
           required
         />
 
-        <div style={{ position: "relative" }}>
+        {/* Password Input with Eye Icon */}
+        <div style={{ position: "relative", width: "100%" }}>
           <input
             type={showPassword ? "text" : "password"}
             name="password"
@@ -82,7 +83,7 @@ const Login = ({ setIsAuthenticated, setCurrentPage }) => {
             value={loginData.password}
             onChange={handleChange}
             required
-            style={{ paddingRight: "35px" }}
+            style={{ width: "100%", paddingRight: "40px" }}
           />
           <span
             onClick={togglePasswordVisibility}
@@ -92,8 +93,7 @@ const Login = ({ setIsAuthenticated, setCurrentPage }) => {
               top: "50%",
               transform: "translateY(-50%)",
               cursor: "pointer",
-              fontSize: "14px",  // Smaller icon size
-              color: "#555"       // Subtle color
+              color: "#555"
             }}
           >
             {showPassword ? <FaRegEyeSlash /> : <FaRegEye />}
