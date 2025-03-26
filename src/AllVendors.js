@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Eye, Search } from "lucide-react";
-import "./App.css";  // Include global styles
+import { Eye } from "lucide-react";
+import "./App.css";  // For styling
 
 const AllVendors = () => {
   const [vendors, setVendors] = useState([]);
@@ -60,6 +60,18 @@ const AllVendors = () => {
     }
   };
 
+  const handleImagePreview = (imageBase64) => {
+    if (imageBase64) {
+      const imageUrl = `data:image/png;base64,${imageBase64}`;
+      const newTab = window.open();
+      newTab.document.write(
+        `<img src="${imageUrl}" alt="Vendor Image" style="max-width:100%; height:auto;">`
+      );
+    } else {
+      alert("No image available");
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-100 p-6">
       <div className="max-w-7xl mx-auto bg-white shadow-lg rounded-lg p-8">
@@ -67,28 +79,25 @@ const AllVendors = () => {
 
         {/* Search Section */}
         <div className="flex items-center gap-4 mb-6">
-          <form
-            onSubmit={handleSearch}
-            className="flex items-center border border-gray-300 rounded-lg overflow-hidden shadow-sm w-full md:w-1/2"
-          >
+          <form onSubmit={handleSearch} className="flex w-full md:w-1/2">
             <input
               type="text"
               placeholder="Enter Vendor ID"
               value={searchId}
               onChange={(e) => setSearchId(e.target.value)}
               required
-              className="flex-1 p-3 outline-none"
+              className="flex-1 p-3 border rounded-l-lg outline-none"
             />
             <button
               type="submit"
-              className="bg-blue-600 text-white px-4 py-2 hover:bg-blue-700 transition"
+              className="bg-blue-600 text-white px-4 py-2 rounded-r-lg hover:bg-blue-700 transition"
             >
-              <Search className="w-5 h-5" />
+              Search
             </button>
           </form>
         </div>
 
-        {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
+        {error && <p className="text-red-500">{error}</p>}
 
         {/* Search Result in Table Format */}
         {searchResult && (
@@ -112,17 +121,11 @@ const AllVendors = () => {
                     <td className="border">{searchResult.vendorName}</td>
                     <td className="border">{searchResult.vendorAddress}</td>
                     <td className="border">{searchResult.vendorPhoneNumber}</td>
-                    <td className="border">
+                    <td className="border text-center">
                       {searchResult?.vendorImage ? (
                         <Eye
                           className="text-blue-500 hover:text-blue-700 cursor-pointer"
-                          onClick={() => {
-                            const imageUrl = `data:image/png;base64,${searchResult.vendorImage}`;
-                            const newTab = window.open();
-                            newTab.document.write(
-                              `<img src="${imageUrl}" alt="Vendor Image" style="max-width:100%; height:auto;">`
-                            );
-                          }}
+                          onClick={() => handleImagePreview(searchResult.vendorImage)}
                         />
                       ) : (
                         "No Image"
@@ -155,17 +158,11 @@ const AllVendors = () => {
                   <td className="border">{vendor.vendorName}</td>
                   <td className="border">{vendor.vendorAddress}</td>
                   <td className="border">{vendor.vendorPhoneNumber}</td>
-                  <td className="border">
+                  <td className="border text-center">
                     {vendor.vendorImage ? (
                       <Eye
                         className="text-green-500 hover:text-green-700 cursor-pointer"
-                        onClick={() => {
-                          const imageUrl = `data:image/png;base64,${vendor.vendorImage}`;
-                          const newTab = window.open();
-                          newTab.document.write(
-                            `<img src="${imageUrl}" alt="Vendor Image" style="max-width:100%; height:auto;">`
-                          );
-                        }}
+                        onClick={() => handleImagePreview(vendor.vendorImage)}
                       />
                     ) : (
                       "No Image"
