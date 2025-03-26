@@ -6,13 +6,19 @@ const Registration = () => {
     vendorName: "",
     vendorAddress: "",
     vendorPhoneNumber: "",
+    vendorImage: null, // Added for file upload
   });
 
   const [error, setError] = useState("");
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setVendorData({ ...vendorData, [name]: value });
+    const { name, value, files } = e.target;
+    // Handle file input separately
+    if (name === "vendorImage") {
+      setVendorData({ ...vendorData, vendorImage: files[0] });
+    } else {
+      setVendorData({ ...vendorData, [name]: value });
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -26,14 +32,20 @@ const Registration = () => {
       return;
     }
 
+    const formData = new FormData();
+    formData.append("vendorId", vendorData.vendorId);
+    formData.append("vendorName", vendorData.vendorName);
+    formData.append("vendorAddress", vendorData.vendorAddress);
+    formData.append("vendorPhoneNumber", vendorData.vendorPhoneNumber);
+    formData.append("vendorImage", vendorData.vendorImage);
+
     try {
       const response = await fetch("https://cloudvendor-1.onrender.com/cloudvendor", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,  // Include JWT token
+          Authorization: `Bearer ${token}`, // Include JWT token
         },
-        body: JSON.stringify(vendorData),
+        body: formData,
       });
 
       if (!response.ok) {
@@ -46,6 +58,7 @@ const Registration = () => {
         vendorName: "",
         vendorAddress: "",
         vendorPhoneNumber: "",
+        vendorImage: null, // Reset file input
       });
 
     } catch (error) {
@@ -90,6 +103,12 @@ const Registration = () => {
           placeholder="Vendor Phone Number"
           value={vendorData.vendorPhoneNumber}
           onChange={handleChange}
+        />
+        <input
+          type="file"
+          name="vendorImage"
+          onChange={handleChange}
+          accept=".jpg, .jpeg, .png"
         />
         <button type="submit">Register</button>
       </form>
