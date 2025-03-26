@@ -1,5 +1,5 @@
 import React from "react";
-import "./Navbar.css";
+import "./App.css";
 
 const Navbar = ({ isAuthenticated, handleMenuClick, handleLogout }) => {
   return (
@@ -11,6 +11,7 @@ const Navbar = ({ isAuthenticated, handleMenuClick, handleLogout }) => {
       <div className="navbar-links">
         <button className="nav-btn primary" onClick={() => handleMenuClick("home")}>Home</button>
 
+        {/* ✅ Conditional Rendering */}
         {isAuthenticated ? (
           <>
             <button className="nav-btn success" onClick={() => handleMenuClick("registration")}>Registration</button>
@@ -21,6 +22,7 @@ const Navbar = ({ isAuthenticated, handleMenuClick, handleLogout }) => {
             <button className="nav-btn success" onClick={() => handleMenuClick("FaceComponent")}>Face Component</button>
             <button className="nav-btn warning" onClick={() => handleMenuClick("pending")}>Pending Students</button>
 
+            {/* ✅ Logout button */}
             <button className="nav-btn logout" onClick={handleLogout}>Logout</button>
           </>
         ) : (
