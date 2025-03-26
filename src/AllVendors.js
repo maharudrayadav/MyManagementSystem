@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Eye, Search } from "lucide-react";
-import "./App.css";  // Include this for global styles
+import "./App.css";  // Include for global styles
 
 const AllVendors = () => {
   const [vendors, setVendors] = useState([]);
@@ -88,42 +88,63 @@ const AllVendors = () => {
           </form>
         </div>
 
-        {error && (
-          <p className="text-red-500 text-sm mt-2">{error}</p>
-        )}
+        {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
 
         {/* Search Result Section */}
         {searchResult && (
-          <div className="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6 rounded-lg">
-            <h3 className="text-lg font-semibold text-blue-700">Search Result:</h3>
+          <div className="mb-8">
+            <h3 className="text-xl font-semibold text-blue-700 mb-4">Search Result:</h3>
+
+            {/* Stylish Card View */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+              <div className="bg-white shadow-lg rounded-lg p-6 transition hover:shadow-xl">
+                <h4 className="text-lg font-semibold text-gray-800">Vendor Details</h4>
+                <p className="text-gray-600"><strong>ID:</strong> {searchResult.vendorId}</p>
+                <p className="text-gray-600"><strong>Name:</strong> {searchResult.vendorName}</p>
+                <p className="text-gray-600"><strong>Address:</strong> {searchResult.vendorAddress}</p>
+                <p className="text-gray-600"><strong>Phone:</strong> {searchResult.vendorPhoneNumber}</p>
+                {searchResult?.vendorImage && (
+                  <div className="mt-4">
+                    <button
+                      className="text-blue-500 hover:text-blue-700"
+                      onClick={() => {
+                        const imageUrl = `data:image/png;base64,${searchResult.vendorImage}`;
+                        const newTab = window.open();
+                        newTab.document.write(`<img src="${imageUrl}" alt="Vendor Image" style="max-width:100%; height:auto;">`);
+                      }}
+                    >
+                      View Image
+                    </button>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Table View */}
             <div className="overflow-x-auto">
-              <table className="w-full table-auto mt-4">
+              <table className="w-full table-auto border-collapse border border-gray-300">
                 <thead>
                   <tr className="bg-blue-100 text-blue-700">
-                    <th className="p-3">ID</th>
-                    <th>Name</th>
-                    <th>Address</th>
-                    <th>Phone</th>
-                    <th>View Image</th>
+                    <th className="p-3 border">ID</th>
+                    <th className="border">Name</th>
+                    <th className="border">Address</th>
+                    <th className="border">Phone</th>
+                    <th className="border">View Image</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr className="border-b">
-                    <td className="p-3">{searchResult.vendorId}</td>
-                    <td>{searchResult.vendorName}</td>
-                    <td>{searchResult.vendorAddress}</td>
-                    <td>{searchResult.vendorPhoneNumber}</td>
-                    <td>
+                  <tr className="hover:bg-gray-100 transition">
+                    <td className="p-3 border">{searchResult.vendorId}</td>
+                    <td className="border">{searchResult.vendorName}</td>
+                    <td className="border">{searchResult.vendorAddress}</td>
+                    <td className="border">{searchResult.vendorPhoneNumber}</td>
+                    <td className="border">
                       <Eye
                         className="text-blue-500 hover:text-blue-700 cursor-pointer"
                         onClick={() => {
-                          if (searchResult?.vendorImage) {
-                            const imageUrl = `data:image/png;base64,${searchResult.vendorImage}`;
-                            const newTab = window.open();
-                            newTab.document.write(`<img src="${imageUrl}" alt="Vendor Image" style="max-width:100%; height:auto;">`);
-                          } else {
-                            alert("No image available");
-                          }
+                          const imageUrl = `data:image/png;base64,${searchResult.vendorImage}`;
+                          const newTab = window.open();
+                          newTab.document.write(`<img src="${imageUrl}" alt="Vendor Image" style="max-width:100%; height:auto;">`);
                         }}
                       />
                     </td>
@@ -148,10 +169,7 @@ const AllVendors = () => {
             </thead>
             <tbody>
               {vendors.map((vendor, index) => (
-                <tr
-                  key={index}
-                  className="border-b hover:bg-gray-100 transition"
-                >
+                <tr key={index} className="border-b hover:bg-gray-100 transition">
                   <td className="p-3">{vendor.vendorId}</td>
                   <td>{vendor.vendorName}</td>
                   <td>{vendor.vendorAddress}</td>
