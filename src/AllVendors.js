@@ -14,7 +14,7 @@ const AllVendors = () => {
     fetch("https://cloudvendor-1.onrender.com/cloudvendor", {
       method: "GET",
       headers: {
-        Authorization: Bearer ${token},
+        Authorization: `Bearer ${token}`,  // ✅ Fixed string interpolation
       },
     })
       .then((res) => {
@@ -50,11 +50,16 @@ const AllVendors = () => {
                   <Eye
                     className="eye-icon"
                     onClick={() => {
-                      const imageUrl = data:image/png;base64,${vendor.vendorImage};
+                      const imageUrl = `data:image/png;base64,${vendor.vendorImage}`;  // ✅ Fixed image URL
                       const newTab = window.open();
-                      newTab.document.write(
-                        <img src="${imageUrl}" alt="Vendor Image" style="max-width:100%; height:auto;">
-                      );
+                      newTab.document.write(`
+                        <html>
+                          <body style="margin:0; display:flex; justify-content:center; align-items:center; height:100vh;">
+                            <img src="${imageUrl}" alt="Vendor Image" style="max-width:100%; height:auto;">
+                          </body>
+                        </html>
+                      `);
+                      newTab.document.close();
                     }}
                     style={{ cursor: "pointer" }}
                   />
