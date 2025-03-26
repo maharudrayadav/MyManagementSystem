@@ -68,4 +68,4 @@ const AllVendors = () => {
   );
 };
 
-export default AllVendors
+export default AllVendors;
