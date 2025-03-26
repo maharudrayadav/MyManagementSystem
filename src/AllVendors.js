@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Eye } from "lucide-react";
-import "./App.css";  // For styling
+import "./App.css";  // Import the CSS file
 
 const AllVendors = () => {
   const [vendors, setVendors] = useState([]);
@@ -99,73 +99,70 @@ const AllVendors = () => {
 
         {error && <p className="text-red-500">{error}</p>}
 
-        {/* Search Result in Table Format */}
+        {/* Search Result Table */}
         {searchResult && (
-          <div className="mb-8">
+          <div className="table-container mb-8">
             <h3 className="text-xl font-semibold text-blue-700 mb-4">Search Result:</h3>
-
-            <div className="overflow-x-auto">
-              <table className="w-full table-auto border-collapse border border-gray-300">
-                <thead>
-                  <tr className="bg-blue-100 text-blue-700">
-                    <th className="p-3 border">ID</th>
-                    <th className="border">Name</th>
-                    <th className="border">Address</th>
-                    <th className="border">Phone</th>
-                    <th className="border">View Image</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr className="hover:bg-gray-100 transition">
-                    <td className="p-3 border">{searchResult.vendorId}</td>
-                    <td className="border">{searchResult.vendorName}</td>
-                    <td className="border">{searchResult.vendorAddress}</td>
-                    <td className="border">{searchResult.vendorPhoneNumber}</td>
-                    <td className="border text-center">
-                      {searchResult?.vendorImage ? (
-                        <Eye
-                          className="text-blue-500 hover:text-blue-700 cursor-pointer"
-                          onClick={() => handleImagePreview(searchResult.vendorImage)}
-                        />
-                      ) : (
-                        "No Image"
-                      )}
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Address</th>
+                  <th>Phone</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{searchResult.vendorId}</td>
+                  <td>{searchResult.vendorName}</td>
+                  <td>{searchResult.vendorAddress}</td>
+                  <td>{searchResult.vendorPhoneNumber}</td>
+                  <td className="action-cell">
+                    {searchResult?.vendorImage ? (
+                      <Eye
+                        className="eye-icon"
+                        onClick={() => handleImagePreview(searchResult.vendorImage)}
+                      />
+                    ) : (
+                      <span className="no-image">No Image</span>
+                    )}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         )}
 
         {/* All Vendors Table */}
-        <div className="overflow-x-auto">
+        <div className="table-container">
           <h3 className="text-xl font-semibold text-gray-800 mb-4">All Vendors</h3>
-          <table className="w-full table-auto border-collapse border border-gray-300">
+          <table>
             <thead>
-              <tr className="bg-gray-200 text-gray-700">
-                <th className="p-3 border">ID</th>
-                <th className="border">Name</th>
-                <th className="border">Address</th>
-                <th className="border">Phone</th>
-                <th className="border">View Image</th>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Phone</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
               {vendors.map((vendor, index) => (
-                <tr key={index} className="border-b hover:bg-gray-100 transition">
-                  <td className="p-3 border">{vendor.vendorId}</td>
-                  <td className="border">{vendor.vendorName}</td>
-                  <td className="border">{vendor.vendorAddress}</td>
-                  <td className="border">{vendor.vendorPhoneNumber}</td>
-                  <td className="border text-center">
+                <tr key={index}>
+                  <td>{vendor.vendorId}</td>
+                  <td>{vendor.vendorName}</td>
+                  <td>{vendor.vendorAddress}</td>
+                  <td>{vendor.vendorPhoneNumber}</td>
+                  <td className="action-cell">
                     {vendor.vendorImage ? (
                       <Eye
-                        className="text-green-500 hover:text-green-700 cursor-pointer"
+                        className="eye-icon"
                         onClick={() => handleImagePreview(vendor.vendorImage)}
                       />
                     ) : (
-                      "No Image"
+                      <span className="no-image">No Image</span>
                     )}
                   </td>
                 </tr>
