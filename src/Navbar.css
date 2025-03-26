@@ -1,0 +1,77 @@
+/* Navbar container */
+.navbar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #1f1f1f;
+  color: #fff;
+  height: 100vh;
+  width: 300px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+  padding: 20px;
+  position: fixed;
+  left: 0;
+  top: 0;
+  overflow-y: auto;
+}
+
+/* Logo styling */
+.navbar-logo {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 30px;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.navbar-logo:hover {
+  transform: scale(1.1);
+}
+
+/* Button container with vertical layout */
+.navbar-links {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+}
+
+/* Button styling */
+.nav-btn {
+  width: 100%;
+  padding: 15px 25px;
+  font-size: 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+  text-align: left;
+}
+
+/* Hover and active effect */
+.nav-btn:hover {
+  transform: translateY(-3px);
+  opacity: 0.9;
+}
+
+/* Button colors */
+.primary { background: #007bff; color: #fff; }
+.success { background: #28a745; color: #fff; }
+.info { background: #17a2b8; color: #fff; }
+.warning { background: #ffc107; color: #fff; }
+.secondary { background: #6c757d; color: #fff; }
+.logout { background: #dc3545; color: #fff; }
+
+/* Scrollbar styling */
+.navbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.navbar::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+.navbar::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
