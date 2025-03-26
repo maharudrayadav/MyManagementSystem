@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Eye } from "lucide-react";
+import { Eye, Search } from "lucide-react";
 
 const AllVendors = () => {
   const [vendors, setVendors] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
   const token = localStorage.getItem("token"); // Get token from storage
 
   useEffect(() => {
@@ -14,7 +15,7 @@ const AllVendors = () => {
     fetch("https://cloudvendor-1.onrender.com/cloudvendor", {
       method: "GET",
       headers: {
-        Authorization: `Bearer ${token}`,  // ✅ Fixed string interpolation
+        Authorization: `Bearer ${token}`,
       },
     })
       .then((res) => {
@@ -25,9 +26,34 @@ const AllVendors = () => {
       .catch((error) => console.error("Error fetching vendors:", error));
   }, [token]);
 
+  const filteredVendors = vendors.filter(
+    (vendor) =>
+      vendor.vendorName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      vendor.vendorId.toString().includes(searchTerm)
+  );
+
   return (
     <div className="page all-vendors">
       <h1>All Vendors</h1>
+
+      {/* Search Input with Icon */}
+      <div style={{ display: "flex", alignItems: "center", marginBottom: "20px" }}>
+        <input
+          type="text"
+          placeholder="Search by ID or Name..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          style={{
+            padding: "10px",
+            width: "300px",
+            border: "1px solid #ccc",
+            borderRadius: "4px",
+            marginRight: "10px",
+          }}
+        />
+        <Search size={24} color="#555" />
+      </div>
+
       <table className="styled-table">
         <thead>
           <tr>
@@ -39,7 +65,7 @@ const AllVendors = () => {
           </tr>
         </thead>
         <tbody>
-          {vendors.map((vendor, index) => (
+          {filteredVendors.map((vendor, index) => (
             <tr key={index}>
               <td>{vendor.vendorId}</td>
               <td>{vendor.vendorName}</td>
@@ -50,7 +76,7 @@ const AllVendors = () => {
                   <Eye
                     className="eye-icon"
                     onClick={() => {
-                      const imageUrl = `data:image/png;base64,${vendor.vendorImage}`;  // ✅ Fixed image URL
+                      const imageUrl = `data:image/png;base64,${vendor.vendorImage}`;
                       const newTab = window.open();
                       newTab.document.write(`
                         <html>
