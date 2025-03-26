@@ -313,6 +313,111 @@ body {
   .navbar-links {
     flex-direction: column;
   }
+  /* General table styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 16px;
+  text-align: left;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* Table Header */
+thead {
+  background-color: #007bff;
+  color: white;
+}
+
+thead th {
+  padding: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+/* Table Rows */
+tbody tr {
+  border-bottom: 1px solid #ddd;
+  transition: background 0.3s;
+}
+
+tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+/* Table cells */
+td {
+  padding: 12px;
+  color: #333;
+}
+
+/* Alternate row colors */
+tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* Action Cell (Eye Icon) */
+.action-cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.eye-icon {
+  color: #28a745; 
+  transition: color 0.3s;
+  cursor: pointer;
+}
+
+.eye-icon:hover {
+  color: #218838;
+}
+
+/* No Image text styling */
+.no-image {
+  color: #dc3545;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* Table container with scroll on small screens */
+.table-container {
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+/* Button and Input Styling */
+button, input {
+  padding: 10px 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+  font-size: 14px;
+}
+
+button {
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+input {
+  width: 100%;
+  transition: border 0.3s;
+}
+
+input:focus {
+  border-color: #007bff;
+}
+
 
   .nav-btn {
     width: 100%;
