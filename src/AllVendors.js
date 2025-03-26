@@ -1,13 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Eye } from "lucide-react";
-import "./App.css";  // Import the CSS file
 
 const AllVendors = () => {
   const [vendors, setVendors] = useState([]);
-  const [searchId, setSearchId] = useState("");
-  const [searchResult, setSearchResult] = useState(null);
-  const [error, setError] = useState("");
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem("token"); // Get token from storage
 
   useEffect(() => {
     if (!token) {
@@ -29,12 +25,71 @@ const AllVendors = () => {
       .catch((error) => console.error("Error fetching vendors:", error));
   }, [token]);
 
+  return (
+    <div className="page all-vendors">
+      <h1>All Vendors</h1>
+      <table className="styled-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Phone</th>
+            <th>View Image</th>
+          </tr>
+        </thead>
+        <tbody>
+          {vendors.map((vendor, index) => (
+            <tr key={index}>
+              <td>{vendor.vendorId}</td>
+              <td>{vendor.vendorName}</td>
+              <td>{vendor.vendorAddress}</td>
+              <td>{vendor.vendorPhoneNumber}</td>
+              <td>
+                {vendor.vendorImage && (
+                  <Eye
+                    className="eye-icon"
+                    onClick={() => {
+                      const imageUrl = `data:image/png;base64,${vendor.vendorImage}`;
+                      const newTab = window.open();
+                      newTab.document.write(
+                        `<img src="${imageUrl}" alt="Vendor Image" style="max-width:100%; height:auto;">`
+                      );
+                    }}
+                    style={{ cursor: "pointer" }}
+                  />
+                )}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+};
+
+export default AllVendors;import React, { useState } from "react";
+import { Eye } from "lucide-react";
+import "./App.css";  // Import CSS file
+
+const SearchVendor = () => {
+  const [searchId, setSearchId] = useState("");
+  const [searchResult, setSearchResult] = useState(null);
+  const [error, setError] = useState("");
+
   const handleSearch = async (e) => {
     e.preventDefault();
     setError("");
 
     if (!searchId.trim() || isNaN(searchId)) {
       setError("Please enter a valid numeric Vendor ID.");
+      return;
+    }
+
+    const token = localStorage.getItem("token"); 
+
+    if (!token) {
+      setError("Authentication token is missing. Please log in.");
       return;
     }
 
@@ -60,85 +115,28 @@ const AllVendors = () => {
     }
   };
 
-  const handleImagePreview = (imageBase64) => {
-    if (imageBase64) {
-      const imageUrl = `data:image/png;base64,${imageBase64}`;
-      const newTab = window.open();
-      newTab.document.write(
-        `<img src="${imageUrl}" alt="Vendor Image" style="max-width:100%; height:auto;">`
-      );
-    } else {
-      alert("No image available");
-    }
-  };
-
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
-      <div className="max-w-7xl mx-auto bg-white shadow-lg rounded-lg p-8">
-        <h1 className="text-3xl font-bold mb-6 text-gray-800">All Vendors</h1>
+    <div className="search-container">
+      <h1>Search Vendor</h1>
+      
+      <form onSubmit={handleSearch} className="search-form">
+        <input
+          type="text"
+          placeholder="Enter Vendor ID"
+          value={searchId}
+          onChange={(e) => setSearchId(e.target.value)}
+          required
+          className="search-input"
+        />
+        <button type="submit" className="search-button">Search</button>
+      </form>
 
-        {/* Search Section */}
-        <div className="flex items-center gap-4 mb-6">
-          <form onSubmit={handleSearch} className="flex w-full md:w-1/2">
-            <input
-              type="text"
-              placeholder="Enter Vendor ID"
-              value={searchId}
-              onChange={(e) => setSearchId(e.target.value)}
-              required
-              className="flex-1 p-3 border rounded-l-lg outline-none"
-            />
-            <button
-              type="submit"
-              className="bg-blue-600 text-white px-4 py-2 rounded-r-lg hover:bg-blue-700 transition"
-            >
-              Search
-            </button>
-          </form>
-        </div>
+      {error && <p className="error-message">{error}</p>}
 
-        {error && <p className="text-red-500">{error}</p>}
-
-        {/* Search Result Table */}
-        {searchResult && (
-          <div className="table-container mb-8">
-            <h3 className="text-xl font-semibold text-blue-700 mb-4">Search Result:</h3>
-            <table>
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Name</th>
-                  <th>Address</th>
-                  <th>Phone</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>{searchResult.vendorId}</td>
-                  <td>{searchResult.vendorName}</td>
-                  <td>{searchResult.vendorAddress}</td>
-                  <td>{searchResult.vendorPhoneNumber}</td>
-                  <td className="action-cell">
-                    {searchResult?.vendorImage ? (
-                      <Eye
-                        className="eye-icon"
-                        onClick={() => handleImagePreview(searchResult.vendorImage)}
-                      />
-                    ) : (
-                      <span className="no-image">No Image</span>
-                    )}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        )}
-
-        {/* All Vendors Table */}
-        <div className="table-container">
-          <h3 className="text-xl font-semibold text-gray-800 mb-4">All Vendors</h3>
-          <table>
+      {searchResult && (
+        <div className="result-container">
+          <h3>Search Result:</h3>
+          <table className="result-table">
             <thead>
               <tr>
                 <th>ID</th>
@@ -149,30 +147,33 @@ const AllVendors = () => {
               </tr>
             </thead>
             <tbody>
-              {vendors.map((vendor, index) => (
-                <tr key={index}>
-                  <td>{vendor.vendorId}</td>
-                  <td>{vendor.vendorName}</td>
-                  <td>{vendor.vendorAddress}</td>
-                  <td>{vendor.vendorPhoneNumber}</td>
-                  <td className="action-cell">
-                    {vendor.vendorImage ? (
-                      <Eye
-                        className="eye-icon"
-                        onClick={() => handleImagePreview(vendor.vendorImage)}
-                      />
-                    ) : (
-                      <span className="no-image">No Image</span>
-                    )}
-                  </td>
-                </tr>
-              ))}
+              <tr>
+                <td>{searchResult.vendorId}</td>
+                <td>{searchResult.vendorName}</td>
+                <td>{searchResult.vendorAddress}</td>
+                <td>{searchResult.vendorPhoneNumber}</td>
+                <td>
+                  <Eye
+                    className="eye-icon"
+                    onClick={() => {
+                      if (searchResult?.vendorImage) {
+                        const imageUrl = `data:image/png;base64,${searchResult.vendorImage}`;
+                        const newTab = window.open();
+                        newTab.document.write(`<img src="${imageUrl}" alt="Vendor Image" style="max-width:100%; height:auto;">`);
+                      } else {
+                        alert("No image available");
+                      }
+                    }}
+                    style={{ cursor: "pointer" }}
+                  />
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>
-      </div>
+      )}
     </div>
   );
 };
 
-export default AllVendors;
+export default SearchVendor; 
