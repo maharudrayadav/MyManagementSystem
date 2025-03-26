@@ -52,7 +52,6 @@ const Login = ({ setIsAuthenticated, setCurrentPage }) => {
       setCurrentPage("home");
     } catch (error) {
       console.error("Login error:", error);
-      alert("Error connecting to server or invalid credentials");
     }
   };
 
