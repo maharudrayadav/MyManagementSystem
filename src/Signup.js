@@ -22,8 +22,8 @@ const Signup = ({ setCurrentPage }) => {
 
     try {
       const url = userType === "teacher"
-        ? "https://cloudvendor-1.onrender.com/auth/register"  // Teacher API
-        : "https://cloudvendor-1.onrender.com/authStudent/register";        // Student API
+        ? "https://cloudvendor-production.up.railway.app/auth/register"  // Teacher API
+        : "https://cloudvendor-production.up.railway.app/authStudent/register";        // Student API
 
       const payload = userType === "teacher"
         ? {
