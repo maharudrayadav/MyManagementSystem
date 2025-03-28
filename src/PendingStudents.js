@@ -24,7 +24,7 @@ const PendingStudents = () => {
   // Approve a student
   const approveStudent = async (username) => {
     try {
-      await axios.put(`https://cloudvendor-1.onrender.com/authStudent/approve/${username}`);
+      await axios.put(`https://cloudvendor-production.up.railway.app/authStudent/approve/${username}`);
       alert(`Student ${username} approved!`);
       setStudents(students.filter((student) => student.username !== username));
     } catch (error) {
