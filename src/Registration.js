@@ -40,7 +40,7 @@ const Registration = () => {
     formData.append("vendorImage", vendorData.vendorImage);
 
     try {
-      const response = await fetch("https://cloudvendor-1.onrender.com/cloudvendor", {
+      const response = await fetch("https://cloudvendor-production.up.railway.app/cloudvendor", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`, // Include JWT token
