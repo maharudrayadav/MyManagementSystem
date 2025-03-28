@@ -14,7 +14,7 @@ const ResultShow = () => {
             return;
         }
 
-        fetch("https://cloudvendor-1.onrender.com/cloudvendor/cloudsets", {
+        fetch("https://cloudvendor-production.up.railway.app/cloudvendor/cloudsets", {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
