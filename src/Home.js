@@ -18,7 +18,7 @@ const Home = () => {
 
     try {
       const response = await fetch(
-        `https://cloudvendor-1.onrender.com/cloudvendor/create/${selectedSubject}`,
+        `https://cloudvendor-production.up.railway.app/cloudvendor/create/${selectedSubject}`,
         {
           method: "GET",
           headers: {
