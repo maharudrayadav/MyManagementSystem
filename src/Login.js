@@ -24,8 +24,8 @@ const Login = ({ setIsAuthenticated, setCurrentPage }) => {
 
     const apiUrl =
       userType === "teacher"
-        ? "https://cloudvendor-1.onrender.com/auth/login"
-        : "https://cloudvendor-1.onrender.com/authStudent/login";
+        ? "https://cloudvendor-production.up.railway.app/auth/login"
+        : "https://cloudvendor-production.up.railway.app/authStudent/login";
 
     try {
       const response = await fetch(apiUrl, {
