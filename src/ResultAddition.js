@@ -27,7 +27,7 @@ const ResultAddition = () => {
     }
 
     try {
-      const response = await fetch("https://cloudvendor-1.onrender.com/cloudvendor/set", {
+      const response = await fetch("https://cloudvendor-production.up.railway.app/cloudvendor/set", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
