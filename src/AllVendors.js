@@ -12,7 +12,7 @@ const AllVendors = () => {
       return;
     }
 
-    fetch("https://cloudvendor-1.onrender.com/cloudvendor", {
+    fetch("https://cloudvendor-production.up.railway.app/cloudvendor", {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
