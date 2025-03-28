@@ -24,7 +24,7 @@ const SearchVendor = () => {
     }
 
     try {
-      const response = await fetch("https://cloudvendor-1.onrender.com/cloudvendor/id", {
+      const response = await fetch("https://cloudvendor-production.up.railway.app/cloudvendor/id", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
