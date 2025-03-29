@@ -4,7 +4,7 @@ import { Eye, Search } from "lucide-react";
 const AllVendors = () => {
   const [vendors, setVendors] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [isLoading, setIsLoading] = useState(true);  // Loading state
+  const [isLoading, setIsLoading] = useState(true); // Loading state
   const token = localStorage.getItem("token");
 
   useEffect(() => {
@@ -25,11 +25,11 @@ const AllVendors = () => {
       })
       .then((data) => {
         setVendors(data);
-        setIsLoading(false);  // Stop loading
+        setIsLoading(false); // Stop loading
       })
       .catch((error) => {
         console.error("Error fetching vendors:", error);
-        setIsLoading(false);  // Stop loading even on error
+        setIsLoading(false); // Stop loading even on error
       });
   }, [token]);
 
@@ -123,9 +123,9 @@ const AllVendors = () => {
           .spinner {
             width: 50px;
             height: 50px;
-            border: 5px solid rgba(0, 0, 0, 0.1);
+            border: 5px solid rgba(128, 0, 128, 0.2); /* Light Purple */
             border-radius: 50%;
-            border-top: 5px solid #555;
+            border-top: 5px solid purple; /* Dark Purple */
             animation: spin 1s linear infinite;
           }
 
