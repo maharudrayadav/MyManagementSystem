@@ -13,8 +13,6 @@ const AllVendors = () => {
       return;
     }
 
-    setIsLoading(true);  // Start loading
-
     fetch("https://cloudvendor-production.up.railway.app/cloudvendor", {
       method: "GET",
       headers: {
@@ -65,7 +63,7 @@ const AllVendors = () => {
 
       {/* Loading Spinner */}
       {isLoading ? (
-        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "60vh" }}>
+        <div className="spinner-container">
           <div className="spinner"></div>
         </div>
       ) : (
@@ -115,6 +113,13 @@ const AllVendors = () => {
       {/* Spinner CSS */}
       <style>
         {`
+          .spinner-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 60vh;
+          }
+
           .spinner {
             width: 50px;
             height: 50px;
